@@ -304,7 +304,7 @@ window.CONTENT = {
 /* ---------- Objection library ----------
    Generated from 479 transcribed post-eval calls (Aug 1-Sep 1 2026). Each sub-objection has:
    verbatims  = what parents actually said
-   draft      = DRAFT answer for Jishan to rewrite
+   draft      = DRAFT answer for the admissions lead to rewrite
    dont       = what to avoid, from the calls that lost the parent
    best       = strongest real responses (anonymised, objection-handling score 1-5)
    avoid      = real responses that left the objection unresolved
