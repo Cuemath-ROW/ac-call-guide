@@ -306,9 +306,9 @@ function renderObjections(q) {
           <div class="answer type-body-lg">${fill(s.draft)}</div>
           ${s.dont ? `<div class="type-body-md" style="margin-top:var(--space-8)"><strong>Avoid:</strong> ${esc(s.dont)}</div>` : ""}
           ${s.best.length ? `<details style="margin-top:var(--space-12)"><summary class="type-label-md" style="cursor:pointer">What strong calls did (${s.best.length})</summary>
-             ${s.best.map(b => `<div class="ex good"><div class="who type-caption">${esc(b.ac)} · call ${esc(b.call.slice(0, 10))} · handling ${b.score}/5</div><div class="type-body-md">${esc(b.response)}</div></div>`).join("")}</details>` : ""}
+             ${s.best.map(b => `<div class="ex good"><div class="who type-caption">Real call · objection handling ${b.score}/5</div><div class="type-body-md">${esc(b.response)}</div></div>`).join("")}</details>` : ""}
           ${s.avoid.length ? `<details style="margin-top:var(--space-8)"><summary class="type-label-md" style="cursor:pointer">What did not land (${s.avoid.length})</summary>
-             ${s.avoid.map(b => `<div class="ex bad"><div class="who type-caption">${esc(b.ac)} · call ${esc(b.call.slice(0, 10))}</div><div class="type-body-md">${esc(b.response)}</div></div>`).join("")}</details>` : ""}
+             ${s.avoid.map(b => `<div class="ex bad"><div class="who type-caption">Real call · left unresolved</div><div class="type-body-md">${esc(b.response)}</div></div>`).join("")}</details>` : ""}
         </div></details>`).join("")}</div>`;
   }).join("");
   return `<input class="search type-body-md" placeholder="Search objections (e.g. monthly, Kumon, coach)" value="${esc(q)}" oninput="document.getElementById('obj-list').innerHTML=renderObjectionsList(this.value)">

@@ -9,7 +9,7 @@
      [date]    evaluation date (typed on the call screen, optional)
      [greet]   auto: "Good morning / afternoon / evening" by the parent's time zone picked on screen
 
-   Items marked DRAFT or TODO are for Jishan to confirm or rewrite.
+   Items marked DRAFT or TODO are for the admissions lead to confirm or rewrite.
    ============================================================================ */
 
 window.CONTENT = {
@@ -62,9 +62,9 @@ window.CONTENT = {
       followup: "Hi [parent], [AC] from Cuemath. As discussed I have closed [child]'s profile and you will not receive further calls from us. The MathFit report remains yours to use. Wishing [child] all the best." }
   ],
 
-  /* ---------- Pricing: TODO Jishan to fill the real grid ---------- */
+  /* ---------- Pricing: TODO admissions lead to fill the real grid ---------- */
   pricing: {
-    todo: "TODO: Jishan to confirm every number in this grid before launch. Figures below are placeholders taken from the sample pricing email (Grades 6-7, Standard) and the most-quoted numbers on calls.",
+    todo: "TODO: confirm every number in this grid before launch. Figures below are placeholders taken from the sample pricing email (Grades 6-7, Standard) and the most-quoted numbers on calls.",
     tiers: [
       { id: "basic",    label: "Basic",    classLength: "40 min", grades: "TODO (e.g. K-5)", coach: "US-licensed specialist coach" },
       { id: "standard", label: "Standard", classLength: "55 min", grades: "TODO (e.g. 3-8)", coach: "Cuemath senior coach" }
@@ -306,7 +306,7 @@ window.CONTENT = {
    verbatims  = what parents actually said
    draft      = DRAFT answer for Jishan to rewrite
    dont       = what to avoid, from the calls that lost the parent
-   best       = strongest real responses (AC, call id, objection-handling score 1-5)
+   best       = strongest real responses (anonymised, objection-handling score 1-5)
    avoid      = real responses that left the objection unresolved
    ---------------------------------------- */
 window.CONTENT.objections = {
@@ -326,33 +326,23 @@ window.CONTENT.objections = {
     "dont": "Never say 'let me check what I can do' on price. Never move to closing the profile within two minutes of a price objection.",
     "best": [
      {
-      "ac": "Jasmin Chadda",
-      "call": "CAb4dc98401323ff7bd19e6a70d0d7ec21",
       "score": 5,
-      "response": "Recommended the shorter 3-month tenure to reduce commitment, then guided toward the Basic plan matching Jatin's foundational needs rather than upselling."
+      "response": "Recommended the shorter 3-month tenure to reduce commitment, then guided toward the Basic plan matching [child] foundational needs rather than upselling."
      },
      {
-      "ac": "Navneet Kumar",
-      "call": "CA6dbded11d2b5741dd72f7bfb6aaaf6c5",
       "score": 4,
       "response": "Explained prices were standardized last December across all US states to avoid parent-to-parent pricing conflicts."
      },
      {
-      "ac": "Arnav Suri",
-      "call": "CA5981b70a9ce24d508f6007ad138c22c3",
       "score": 4,
       "response": "Held firm on no standardized discounting, offered a 1-month trial with pro-rated refund instead of a discount."
      }
     ],
     "avoid": [
      {
-      "ac": "Sudhanshu Shrivastava",
-      "call": "CAf0ba330fca5661c857a08e3cce3e7320",
       "response": "Explained standardized no-discount pricing, emphasized value beyond the tutor (platform, coaches, games, assessments all included), the refund policy, and the pedagogical rationale for shorter, higher-productivity class durations"
      },
      {
-      "ac": "Shreya Prakash",
-      "call": "CAaed3e9badc48a8e0620bed68d57bf2d6",
       "response": "Explained the per-session/platform-fee breakdown and noted the platform fee is waived only on a 12-month upfront plan, which the parent had already ruled out; held firm on the monthly-plan price as the best offer"
      }
     ]
@@ -370,34 +360,24 @@ window.CONTENT.objections = {
     "dont": "Do not imply Basic gets a lesser coach.",
     "best": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CAbc373b50ffd6ae30e91179cee30d68ba",
       "score": 4,
       "response": "Explained the no-lock-in, cancel-anytime refund policy, and offered a 3-month/26-class/$650 plan as a shorter commitment."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CAf656de7a84ef8dcbb0d8b7a69a976dd4",
       "score": 4,
       "response": "I am definitely giving you the best price possible, which is there."
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA1c1474452dd8b3b56ef7eb6bd34543a7",
       "score": 4,
       "response": "No monthly payment option available, but got finance approval for a 3-month plan (26 classes, $650) as the shortest offered tenure."
      }
     ],
     "avoid": [
      {
-      "ac": "Juhi Srivastava",
-      "call": "CA476a3a7fc75120e13c5fea6c9e9bfb14",
       "response": "Cannot offer 12-month pricing on a 3-month payment; can renew into 12 months at same $1560 rate after the 3-month term if satisfied."
      },
      {
-      "ac": "Juhi Srivastava",
-      "call": "CA235c85587de8656e3ddb4e35cf9eb1f1",
-      "response": "I will check on this. As you mentioned Avni is in grade six... I will check this with the team as well."
+      "response": "I will check on this. As you mentioned [child] is in grade six... I will check this with the team as well."
      }
     ]
    },
@@ -414,33 +394,23 @@ window.CONTENT.objections = {
     "dont": "Do not describe the fee as small or nominal. Do not quote a different fee on a later call.",
     "best": [
      {
-      "ac": "Shreya Prakash",
-      "call": "CA37216536dbb495667b1956560918bdca",
       "score": 4,
       "response": "Confirmed platform fee waived for this enrollment."
      },
      {
-      "ac": "Dinesh Deshwal",
-      "call": "CAd95e640213d232d748f4d3f7198c4a64",
       "score": 4,
       "response": "Platform fee is only waived on the 12-month plan; explained the coaching-fee vs platform-fee breakdown and the pro-rata refund policy in detail"
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA3743380b91ea0644ec151334c1ad8e01",
       "score": 4,
       "response": "Confirmed the $90 platform fee is one-time (at first enrollment), and that the 12-month plan carries no platform fee at all and is more cost-effective at $15/class."
      }
     ],
     "avoid": [
      {
-      "ac": "Jaya Gehlot",
-      "call": "CAc13f7763142d4911526f141d71207c79",
       "response": "There is no way to waive off the platform fee, it applies to everybody."
      },
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA3df7f719ac5a19568e4153f0142f85a9",
       "response": "Platform fee is mandatory and one-time, covers Math Gym activities and downloadable ebooks; not waivable."
      }
     ]
@@ -458,33 +428,23 @@ window.CONTENT.objections = {
     "dont": "Do not argue that the other option is bad. Do not match a competitor's number.",
     "best": [
      {
-      "ac": "Harsh Keshwani",
-      "call": "CA1f8f83438ad03153d517fae47b00d3cf",
       "score": 5,
       "response": "Explained the pricing/duration discrepancy likely came from an untrained volunteer at the offline event, not Cuemath staff, and confirmed the evaluation-session figures are accurate."
      },
      {
-      "ac": "Shreya Prakash",
-      "call": "CAe411932edc5edbec5249a05d1810bddf",
       "score": 3,
       "response": "Initially defended the higher tier as necessary for grade-6 content, then reversed and agreed to honor the original $15/session pricing while still covering grade 6 material."
      },
      {
-      "ac": "Nikhil Pandey",
-      "call": "CAe387d4b86441f4b763424217a469d654",
       "score": 3,
       "response": "Quoted 3/6/12-month options ($489/$884/$1560), explained there is no lock-in and a pro-rated refund policy."
      }
     ],
     "avoid": [
      {
-      "ac": "Harsh Keshwani",
-      "call": "CA0681ea4faca8f75d5c11bde2692c5bd5",
       "response": "pricing is fixed from our end...those are non-negotiable prices"
      },
      {
-      "ac": "Harsh Keshwani",
-      "call": "CA75f43ec4e8acef5ae12116353c151499",
       "response": "the payment to be honest is they are really fixed right but as we're ending the month right I can definitely get you a month of extra classes added on but nothing more than that"
      }
     ]
@@ -502,33 +462,23 @@ window.CONTENT.objections = {
     "dont": "Do not promise both benefits in full without checking the rule. Do not mention what another family was given.",
     "best": [
      {
-      "ac": "Somya Jain",
-      "call": "CAfe9463164cbc966e247ed0d04d3c00e9",
       "score": 4,
       "response": "Confirmed the fixed pricing policy with no parent-to-parent variance, but offered a referral benefit if she knows another enrolled Cuemath family."
      },
      {
-      "ac": "Anand raj",
-      "call": "CAf29efc412ebbe1e289035c2856aaeb25",
       "score": 3,
       "response": "AC justified the pricing as US-standard, highlighted the referral bonus and personalized 1:1 tutor, and reiterated the flat $2652 total."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CAafbc00e050703f1341da9adb2ac9e70d",
       "score": 3,
       "response": "Applied a referral benefit (8 extra classes) that brought the effective rate down to $18.5/session on the 12-month plan."
      }
     ],
     "avoid": [
      {
-      "ac": "Juhi Srivastava",
-      "call": "CA20bd09422b16a7246cf2d08202916776",
       "response": "Cited a referral-adjusted per-class rate (~$18.5, $2,080/112 classes) and pitched extra value: the annual plan covers 13 months' worth of content so the child could get ahead to the next grade level and prep for honors/high-cap programs."
      },
      {
-      "ac": "Arnav Suri",
-      "call": "CA26422d0c90e7556e536830e9f4ce823d",
       "response": "Explained the 12-month plan can't be split evenly in half by price, offered sibling bonus classes as a partial offset, then said he'd 'search and find out if this is possible' on matching $1040."
      }
     ]
@@ -551,33 +501,23 @@ window.CONTENT.objections = {
     "dont": "Do not say 'I will get an exception' unless you have one. Do not offer unrelated consolations like free workbooks.",
     "best": [
      {
-      "ac": "Jasmin Chadda",
-      "call": "CAdf6f8a4943e691878fe006e45db0c63f",
       "score": 5,
       "response": "Clarified it was a financial (not commitment-length) concern and suggested a 6-month or 3-month plan instead of the 12-month lump sum."
      },
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CAbc373b50ffd6ae30e91179cee30d68ba",
       "score": 4,
       "response": "Clarified the process for raising requests is simple and reiterated the shorter 3-month option to reduce risk."
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA764e6941dfba97abbb1428bdf6ee6d94",
       "score": 4,
       "response": "I would get an exception for Amayra and request the team so we can offer a 3-month plan of $489 for 26 classes."
      }
     ],
     "avoid": [
      {
-      "ac": "Juhi Srivastava",
-      "call": "CA476a3a7fc75120e13c5fea6c9e9bfb14",
       "response": "No month-to-month payment option; standardized fee structure with only 3-month/6-month/12-month upfront tiers."
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA06f88478c1d6fd7a7e32efd6c6358535",
       "response": "The payment is one time for any of the plan you pick."
      }
     ]
@@ -595,27 +535,19 @@ window.CONTENT.objections = {
     "dont": "Do not treat a card decline as a price objection.",
     "best": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA2278abd6548faeed30279ecacba67bc4",
       "score": 3,
       "response": "Confirmed no lock-in period, can cancel any time and get a refund."
      },
      {
-      "ac": "Yash Shukla",
-      "call": "CAe8d1926b740f7f77080a41e13a143940",
       "score": 3,
       "response": "Clarified extra sessions can be scheduled within the chosen plan (deducted from total) or a 3-sessions/week plan gives more total classes; standard fee structure has no ad-hoc add-ons."
      }
     ],
     "avoid": [
      {
-      "ac": "Juhi Srivastava",
-      "call": "CAea72de4b5f8fcedfeb68cb48b7bd9fb3",
       "response": "No, only USD via a US debit or credit card is supported."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CAdc5daafcea03fabf6c61bf9667c1657c",
       "response": "Attempted to explain that enrolling both kids creates two separate IDs paid at different times, but the explanation was circular and confusing"
      }
     ]
@@ -633,13 +565,9 @@ window.CONTENT.objections = {
     "best": [],
     "avoid": [
      {
-      "ac": "Ruffaida Razak",
-      "call": "CA0dd762d4464ece8167343e8ba3525786",
       "response": "The payment is upfront, but we have a refund guarantee; let's discuss further once you are back."
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CAe50c3e0e6df6fe2a8ed580297544f4bb",
       "response": "Said this isn't possible — full plan payment is required upfront, though first two sessions are refundable if the coach isn't a fit."
      }
     ]
@@ -655,8 +583,6 @@ window.CONTENT.objections = {
     "best": [],
     "avoid": [
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA4a5ec703176ed251287837587efb588b",
       "response": "Confirmed these are upfront subscription payments only, no installment option."
      }
     ]
@@ -679,33 +605,23 @@ window.CONTENT.objections = {
     "dont": "Do not describe 12 months as 'the only real option'.",
     "best": [
      {
-      "ac": "Juhi Srivastava",
-      "call": "CAc0c14aef5af8b4b29aacb83cf606b86f",
       "score": 5,
       "response": "AC made a one-off exception to activate the 3-month plan ($650 + $45 platform fee = $695 for 26 classes) even though the standard site only lists 6/12-month tenures."
      },
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA8c0efdb750711c7ee7ac87a44c99beaa",
       "score": 4,
       "response": "Clarified there is no monthly plan — only 3, 6, and 12-month tenures — and reassured the parent with a cancellation policy if the 3-month plan doesn't work out."
      },
      {
-      "ac": "Shreya Prakash",
-      "call": "CAaed3e9badc48a8e0620bed68d57bf2d6",
       "score": 4,
       "response": "Offered a month-to-month plan with no obligation to move to a longer tenure, fully flexible based on how classes go"
      }
     ],
     "avoid": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA79613197cdaf4ac14d42bc270ada9953",
       "response": "Confirmed no monthly option exists, only 3/6/12-month plans, but reiterated no lock-in and cancel-anytime refund policy."
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA6741ff28fe13cdce27df2312ab71b648",
       "response": "Offered a one-time exception 3-month plan at $650/26 classes but held firm on the standard fee-ladder pricing (no per-session discount for shorter tenure)."
      }
     ]
@@ -723,33 +639,23 @@ window.CONTENT.objections = {
     "dont": "Do not deny the 3-month plan exists. It has been quoted on many calls; check the grid.",
     "best": [
      {
-      "ac": "Yash Shukla",
-      "call": "CAcb7ada511dca6b36e7006d8cbec252ff",
       "score": 5,
       "response": "Agreed to flexibly accommodate extra/catch-up sessions within the existing plan capacity"
      },
      {
-      "ac": "Somya Jain",
-      "call": "CAed616a6e62991309a429e7d395835a9d",
       "score": 4,
       "response": "Confirmed a flexible, pro-rata refund policy."
      },
      {
-      "ac": "Ruffaida Razak",
-      "call": "CAc238a8fc6e887932f25bea91eb05ac05",
       "score": 4,
       "response": "Quoted the 3-month plan ($650 + $45 platform fee, 26 classes) as the flexible shorter option"
      }
     ],
     "avoid": [
      {
-      "ac": "Somya Jain",
-      "call": "CAafbc00e050703f1341da9adb2ac9e70d",
       "response": "Explained pause units for planned absences, rescheduling within the week, and refunds for unused classes, but confirmed sessions cannot be extended beyond the tenure."
      },
      {
-      "ac": "Navneet Kumar",
-      "call": "CAd92969adb3f7131c1b87834b5b7c76dd",
       "response": "(cut off by audio issues before a full answer was given; conversation moved to WhatsApp)"
      }
     ]
@@ -772,33 +678,23 @@ window.CONTENT.objections = {
     "dont": "Do not repeat 'first two classes are the trial' as the only answer. Give concrete coach detail: experience, years with Cuemath, students taught.",
     "best": [
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA20bbb276f2320f83df6a3260d7683a90",
       "score": 5,
       "response": "Explained the new model: specialist assigns a coach based on the eval, and parent gets 2 free observation classes with that coach before paid classes count, with a free swap if it's not a fit."
      },
      {
-      "ac": "Yash Shukla",
-      "call": "CAcb7ada511dca6b36e7006d8cbec252ff",
       "score": 5,
       "response": "Reassured every coach meets the same vetting bar, offered free coach-switch within first 2 (or up to 8) classes if not the right fit"
      },
      {
-      "ac": "Nikhil Pandey",
-      "call": "CA5511cc30d67928aeaafe0a5d7332078a",
       "score": 4,
       "response": "Described the mapped teacher's 9 years experience, 3-4 years teaching in the US, 4 years with Cuemath, 650+ students taught; noted first two classes are trial with a 24-hour teacher-change option."
      }
     ],
     "avoid": [
      {
-      "ac": "Ruffaida Razak",
-      "call": "CAcb4d7c56aa9a3929187607d87016e9e3",
       "response": "No trial with the assigned coach is offered; if unhappy within the first 2 classes the coach can be switched (with those 2 classes credited), and a full refund guarantee exists for unused classes since 2013"
      },
      {
-      "ac": "Dinesh Deshwal",
-      "call": "CAab4298abf61b9ab2dae2c950738592a0",
       "response": "Reassured the parent that classes would be fun learning, not like a regular school class, and that the assessment felt less engaging only because it was a pure assessment."
      }
     ]
@@ -809,40 +705,30 @@ window.CONTENT.objections = {
     "verbatims": [
      "I need like the same [teacher/picture] as what my elder son was going through.",
      "if I don't like the teacher... What are your options for us?",
-     "It puts a worry in my head about if she's going to be too much knowledgeable, too much more than what Avni can grasp because she is only 11 years old.",
+     "It puts a worry in my head about if she's going to be too much knowledgeable, too much more than what [child] can grasp because she is only 11 years old.",
      "She is not comfortable with a male teacher. She wants a female teacher."
     ],
     "draft": "I will note the preference for [preference] and pass it to the matching team. If the requested coach's calendar does not fit [child]'s slots, we match the closest fit and you keep the two-class switch guarantee.",
     "dont": "Never explain why a coach is unavailable using internal reasons such as pay or grade tiers.",
     "best": [
      {
-      "ac": "Harsh Keshwani",
-      "call": "CA1f8f83438ad03153d517fae47b00d3cf",
       "score": 5,
       "response": "Agreed to find and assign a female teacher who fits the child's profile via the teacher-mapping team; offered to swap teacher after first two classes if needed."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CA77d18b68d673047485f36d1725bc47d4",
       "score": 4,
       "response": "Explained coach-matching process from the evaluation, offered first two sessions to judge fit, and a no-penalty coach change policy for early sessions."
      },
      {
-      "ac": "Shweta Sharma",
-      "call": "CA508a5377644170139538c428ab31e89a",
       "score": 4,
       "response": "After registration, if unsatisfied with the assigned coach after two sessions, those sessions are provided free of cost and the coach is changed; this repeats until satisfied."
      }
     ],
     "avoid": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA08cc828f01dfe1197b20b6594e4dfa84",
       "response": "AC explained that delaying registration risks losing the mapped teacher/slots and reassignment to another teacher."
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA501557c13ec497396a2db6b7f1453191",
       "response": "Explained the coach was assigned based on eval findings and track record, and that the first two classes are free/credited back and reassignable if not a fit."
      }
     ]
@@ -860,28 +746,20 @@ window.CONTENT.objections = {
     "dont": "Never say a plan gets 'less qualified' coaches.",
     "best": [
      {
-      "ac": "Jasmin Chadda",
-      "call": "CAb4dc98401323ff7bd19e6a70d0d7ec21",
       "score": 5,
       "response": "Clarified all coaches are equally qualified; the only difference between Basic and Standard is session length and grade-level licensing, not teacher quality."
      },
      {
-      "ac": "Anand raj",
-      "call": "CAfa9c17a8c90a648f9499d7c0fdcb9098",
       "score": 4,
       "response": "AC described coaches as full-time, 8-10 year experienced Cuemath employees, and explained the process to request a coach change if needed."
      },
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA3df7f719ac5a19568e4153f0142f85a9",
       "score": 4,
       "response": "Assigned coach has experience with native US/Canada students of the same grade; parent can change tutor anytime after two free sessions."
      }
     ],
     "avoid": [
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA9a336db4401e75e8bb3d79bcb7d07372",
       "response": "AC reiterated the standard policy without offering an extension or alternative to hold the coach."
      }
     ]
@@ -904,33 +782,23 @@ window.CONTENT.objections = {
     "dont": "Do not offer once a week as a standard option. Do not lose the parent over it either: offer the same-day or weekend pattern, or a later start.",
     "best": [
      {
-      "ac": "Yash Shukla",
-      "call": "CA6b17f68991737cbcc9a4632c1e93ac5f",
       "score": 4,
       "response": "I completely understand your concern. When you proceed for payment it will ask you to confirm your slots also, so you can select any other day and time."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CA7ac2845defbfac0b0c4007ef9e6f0bf8",
       "score": 4,
       "response": "Explained one session/week does not show meaningful progress and recommended a minimum of two sessions/week given the grade 2-to-3 curriculum gap; offered to start with a shorter 6-month tenure as a trial."
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA118d5d1313e9818b4edf74bd4162ad54",
       "score": 4,
       "response": "Explained two sessions/week are recommended based on past outcomes but offered to start with one session and move to two next month."
      }
     ],
     "avoid": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA7ae3c60bd8a9e243f157369db8e1c85b",
       "response": "Explained why two classes/week is the observed minimum for homework follow-through; suggested doing both classes on the same day with a gap; ultimately said policy requires 2/week minimum."
      },
      {
-      "ac": "Arnav Suri",
-      "call": "CA42182b5c1dde33d99ec1086eeec2bbfd",
       "response": "We do have two sessions a week, but what I can do is you can start off with a smaller duration."
      }
     ]
@@ -948,33 +816,23 @@ window.CONTENT.objections = {
     "dont": "Do not leave slots for 'the coach to sort out later'.",
     "best": [
      {
-      "ac": "Somya Jain",
-      "call": "CA93be5bfa35db231f9a0f62e4d75b92b0",
       "score": 5,
       "response": "If you want to start, we will start after November... we can definitely connect back in November"
      },
      {
-      "ac": "Nikhil Pandey",
-      "call": "CA5d1c8893e79404b66f8e21bca63a4e30",
       "score": 4,
       "response": "Explained frequency can be adjusted month to month with the same teacher (e.g., 2 classes/week one month, 3 the next) directly with the tutor."
      },
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA9d8d323406465e370331a10b88d81a0f",
       "score": 4,
       "response": "Explained they can enroll now and start classes later (hold the coach/lock slots) rather than waiting to pay, to avoid losing the slot to another parent."
      }
     ],
     "avoid": [
      {
-      "ac": "Shreya Prakash",
-      "call": "CAb5292d18d83e94d3d8f942d91bda03ce",
       "response": "No worries, thank you so much for letting me know. So by when do you want to get in touch?"
      },
      {
-      "ac": "Ruffaida Razak",
-      "call": "CA6f10b0970123f0d30cb50aca42562c81",
       "response": "Suggested proceeding with enrollment first, then setting the proper time slot, offering classes could start Monday."
      }
     ]
@@ -992,33 +850,23 @@ window.CONTENT.objections = {
     "dont": "Do not sell extra frequency as a way to finish faster if it does not fit the milestones.",
     "best": [
      {
-      "ac": "Somya Jain",
-      "call": "CAf690e45eb5b543341399ef7c587f2c4e",
       "score": 4,
       "response": "Shortest available tenure is 3 months, but comes with a refund policy if the child can't cope — de-risked as a trial."
      },
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA5e506f48024a69f9f879fa54bcb2a032",
       "score": 4,
       "response": "Yeah that is the policy in which we can start later and I'll guide you how to set the date for the same"
      },
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA2aafd31528b8d830c2a08052bb793010",
       "score": 4,
       "response": "Bare minimum is 2 classes/week; 3 classes/week possible only if teacher has availability, same price either way."
      }
     ],
     "avoid": [
      {
-      "ac": "Juhi Srivastava",
-      "call": "CA3dd26b5d9a32ce8da4d7241a051ec337",
       "response": "Acknowledged, no immediate resolution proposed."
      },
      {
-      "ac": "Nikhil Pandey",
-      "call": "CA3ae45510b05582f41b9b61d1a923dfd3",
       "response": "I think are you aware about the class duration everything it's going to be 40 minutes right so it's not possible to matter"
      }
     ]
@@ -1041,33 +889,23 @@ window.CONTENT.objections = {
     "dont": "Do not push for a decision before the parent has compared. Get the date.",
     "best": [
      {
-      "ac": "Yash Shukla",
-      "call": "CAcb7ada511dca6b36e7006d8cbec252ff",
       "score": 5,
       "response": "Named competitors transparently and differentiated Cuemath's personalized, one-on-one curriculum and conceptual depth"
      },
      {
-      "ac": "Somya Jain",
-      "call": "CAf97d27c605d8c91aae4eda84b016575c",
       "score": 4,
-      "response": "Since this is 1-on-1, the coach can flexibly move Ishan to advanced or next-grade curriculum whenever he's ready, unlike a group class."
+      "response": "Since this is 1-on-1, the coach can flexibly move [child] to advanced or next-grade curriculum whenever he's ready, unlike a group class."
      },
      {
-      "ac": "Harsh Keshwani",
-      "call": "CA80241ae80d18933a57787092196fc35b",
       "score": 4,
       "response": "I have to make sure that he's a good fit for him... my job is to really understand your requirement and map your classes accordingly... not as a sales or a marketing person."
      }
     ],
     "avoid": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA96b09164367f80a005ce8e447cbeba16",
       "response": "Acknowledged, asked if there was a specific unmet need, offered to follow up Monday for a decision."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CAe70d8d1274a9f233bbb41e028762aaaf",
       "response": "Acknowledged the parent should compare with other institutes if pricing is the main concern; reiterated the coach hold cannot stay open indefinitely."
      }
     ]
@@ -1085,28 +923,20 @@ window.CONTENT.objections = {
     "dont": "Do not criticise the other provider. Name the structural difference and stop.",
     "best": [
      {
-      "ac": "Shreya Prakash",
-      "call": "CAaed3e9badc48a8e0620bed68d57bf2d6",
       "score": 4,
       "response": "Highlighted Cuemath's 1:1 model versus Kumon/Banjoo's group settings, citing feedback from parents who switched after those competitors expanded group sizes beyond what was promised"
      },
      {
-      "ac": "Yash Shukla",
-      "call": "CA451d924701b5ce821e349fc1ed87365d",
       "score": 3,
       "response": "Cuemath's methodology (puzzles, quizzes) differs from Kumon/Mathnasium's repetitive approach."
      }
     ],
     "avoid": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA7ae3c60bd8a9e243f157369db8e1c85b",
       "response": "Acknowledged, reiterated Cuemath's 40-min session length and personalization but did not match the 1x/week option."
      },
      {
-      "ac": "Shreya Prakash",
-      "call": "CAb22c690dac8f9f379579c385a399fe0a",
-      "response": "I will be assigning you the same [best] coach for Saisha... I can check the profile for the coach for you to review."
+      "response": "I will be assigning you the same [best] coach for [child]... I can check the profile for the coach for you to review."
      }
     ]
    },
@@ -1123,33 +953,23 @@ window.CONTENT.objections = {
     "dont": "Do not get into price comparisons you cannot verify.",
     "best": [
      {
-      "ac": "Navneet Kumar",
-      "call": "CA6dbded11d2b5741dd72f7bfb6aaaf6c5",
       "score": 4,
       "response": "Explained Cuemath's one-on-one personalized conceptual-mastery model versus the competitor's small-group mental-math/arithmetic focus."
      },
      {
-      "ac": "Shreya Prakash",
-      "call": "CAae9397ee829babc74dd522b06edfe597",
       "score": 4,
       "response": "Warned that this competitor's small-class promise tends to expand to 5-6 students per session, cited refund/platform complaints, suggested checking reviews."
      },
      {
-      "ac": "Juhi Srivastava",
-      "call": "CA0acdc536a73d06a1e9ad7969d551fb75",
       "score": 3,
       "response": "Said Cuemath classes are different in approach/quality from the coding classes and suggested checking Trustpilot-style reviews."
      }
     ],
     "avoid": [
      {
-      "ac": "Somya Jain",
-      "call": "CA1e9fce3c4c40b8a85d408493304b6035",
       "response": "Looked up the friend's account and explained she enrolled in 2021 at older pricing, which no longer applies."
      },
      {
-      "ac": "Ruffaida Razak",
-      "call": "CAf011b56ceec6ce1adb4f1456a2faace6",
       "response": "We have a refund guarantee. I understand cost is an important factor, but I'm sure if you compare the quality of classes and the customized approach, it's going to be worth every single penny. Take a couple of classes and see if it works out."
      }
     ]
@@ -1168,13 +988,9 @@ window.CONTENT.objections = {
     "best": [],
     "avoid": [
      {
-      "ac": "Arnav Suri",
-      "call": "CA7d369db5a4d7784bc3e194633b2b1875",
       "response": "Highlighted the sibling benefit (two free months for the second child) as added value."
      },
      {
-      "ac": "Juhi Srivastava",
-      "call": "CA91207e183044419b720ce47f7fc726a1",
       "response": "Okay, you're still deciding."
      }
     ]
@@ -1189,7 +1005,7 @@ window.CONTENT.objections = {
     "n": 40,
     "verbatims": [
      "I'll discuss with my husband and come get back to you.",
-     "Let me discuss it with my wife and also how comfortable Samayra is. Based on that I'll let you guys know whether we want to proceed or not.",
+     "Let me discuss it with my wife and also how comfortable [child] is. Based on that I'll let you guys know whether we want to proceed or not.",
      "I will ask my husband like what he thinks",
      "So I have some numbers... so I have to talk to my wife again and see if there are options for us."
     ],
@@ -1197,33 +1013,23 @@ window.CONTENT.objections = {
     "dont": "Do not accept 'I will discuss and get back'. Offer the joint call and fix the time.",
     "best": [
      {
-      "ac": "Yash Shukla",
-      "call": "CA0f6c6937f199a386209b8a566bb43c95",
       "score": 4,
       "response": "No problem mom, whenever sir is back I can schedule a call back for you and walk you through the complete eval."
      },
      {
-      "ac": "Yash Shukla",
-      "call": "CA7de1c2f9fe40533e2a3490a1231f324e",
       "score": 4,
       "response": "Agreed and continued the pricing discussion directly with the husband."
      },
      {
-      "ac": "Ruffaida Razak",
-      "call": "CA27a8a11899805596702626bbe7f965b4",
       "score": 3,
       "response": "Agreed to reconnect tomorrow after parent discusses with spouse."
      }
     ],
     "avoid": [
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA4069a9d3e745251969478f18adc2a8c4",
       "response": "Please, please do. Please speak with your wife, because we do not have any other additional discounts on top of that."
      },
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CAdb9ca8373b05dcd5c5ba0b9bb54a7526",
       "response": "Agreed to escalate the missing report issue and offered ongoing support via WhatsApp."
      }
     ]
@@ -1246,33 +1052,23 @@ window.CONTENT.objections = {
     "dont": "Do not create false urgency about slots you are not actually holding.",
     "best": [
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA1563afa18b05d11cec559f7dc83b38bc",
       "score": 4,
       "response": "It's a genuine expectation to think and make the wise decision before hurrying up or jumping and taking the incorrect decision."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CAf97d27c605d8c91aae4eda84b016575c",
       "score": 4,
       "response": "Understood the concern and agreed a September 2nd start date works."
      },
      {
-      "ac": "Isha Rana",
-      "call": "CA30cdc10a9766882a4150cccabdbf372d",
       "score": 4,
       "response": "AC offered 'pay now, start later' — complete enrollment now and choose a tentative start date later, changeable per preference."
      }
     ],
     "avoid": [
      {
-      "ac": "Somya Jain",
-      "call": "CA9e4e98b6e213d249cbaa1983f4817f0f",
       "response": "Proposed starting with one class/week during the remaining two weeks of tournament season, then ramping to two sessions/week once free, to avoid falling behind with new school year."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CA44db4ef3980254ed791fd070861f1d56",
       "response": "Pushed back gently, argued starting before school begins (next month) is better than starting after and falling behind on fractions."
      }
     ]
@@ -1290,33 +1086,23 @@ window.CONTENT.objections = {
     "dont": "Do not let travel become an open-ended deferral. Enrol now with a later start, or fix the return-date call.",
     "best": [
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA22a1213cd3b41dc59930f64dcfdd918c",
       "score": 5,
       "response": "Proposed a customized 2-month, 3x/week plan (26 classes in 2 months instead of the usual 3 months) with continuity into India-curriculum classes after the move, priced at a discounted $489."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CA88d6b8a1a35c2bead3409df2a5c29888",
       "score": 4,
       "response": "Confirmed both rescheduling and delaying the start date were possible; helped move the start date to September 9th."
      },
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA5e506f48024a69f9f879fa54bcb2a032",
       "score": 4,
       "response": "For those weeks you can pause it, pause the classes, we have an option to pause the session. Once you come back we will just resume it again."
      }
     ],
     "avoid": [
      {
-      "ac": "Harsh Keshwani",
-      "call": "CAb9735cb6cc212a713535df8101ec1bf0",
       "response": "Wished the parent well and said to reach back out whenever the timing is right"
      },
      {
-      "ac": "Juhi Srivastava",
-      "call": "CAf8f48b9684bd190f7876cbf40cd0d464",
       "response": "Offered to continue classes during the India travel on India-friendly hours"
      }
     ]
@@ -1339,28 +1125,20 @@ window.CONTENT.objections = {
     "dont": "Do not become defensive. Do not over-quote ratings; one proof point is enough.",
     "best": [
      {
-      "ac": "Yash Shukla",
-      "call": "CAcb7ada511dca6b36e7006d8cbec252ff",
       "score": 5,
       "response": "Explained rigorous vetting, 8-week US-curriculum training, minimum 5 years' experience, coach background viewable in portal, 4.9/5 Trustpilot rating"
      },
      {
-      "ac": "Jasmin Chadda",
-      "call": "CAdf6f8a4943e691878fe006e45db0c63f",
       "score": 5,
       "response": "Explained Cuemath has adapted curriculum/methodology to US/Canada standards for 15 years and offered the two free trial classes to test coach fit."
      },
      {
-      "ac": "Navneet Kumar",
-      "call": "CAc147c3a1da516cb5a8b8b7ee6925cdd1",
       "score": 4,
       "response": "Explained teachers are full-time, dedicated to Cuemath only, trained 8 weeks on US curriculum/state standards, minimum 5 years experience, background viewable via the coach profile email"
      }
     ],
     "avoid": [
      {
-      "ac": "Dinesh Deshwal",
-      "call": "CA59e5d0031572a5dfd2a92585db035941",
       "response": "Emphasized the assigned coach's 13 years of teaching experience (7 years with US students) and full training on the US curriculum"
      }
     ]
@@ -1378,33 +1156,23 @@ window.CONTENT.objections = {
     "dont": "Do not say 'trust me'. Send the written terms.",
     "best": [
      {
-      "ac": "Shreya Prakash",
-      "call": "CA37216536dbb495667b1956560918bdca",
       "score": 4,
       "response": "Manager detailed the no-questions refund process and pointed to Trustpilot reviews and 15 years of operating history."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CA9acda4e3f289ca65ee99998dbfcf8cb6",
       "score": 4,
       "response": "Reassured that Cuemath's methodology builds reasoning/logic rather than imposing rigid rules, and coaches are trained not to force a single approach."
      },
      {
-      "ac": "Navneet Kumar",
-      "call": "CA56f87adb0e262319ac3af477e5b82472",
       "score": 4,
       "response": "Explained coach-switch policy, refund guarantee within first 4 sessions, cited Trustpilot ratings and referral base as trust signals."
      }
     ],
     "avoid": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA79613197cdaf4ac14d42bc270ada9953",
       "response": "Said qualifications are internal to the portal, but parent can connect with the teacher directly after regular classes start via PTMs."
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA501557c13ec497396a2db6b7f1453191",
       "response": "Explained the system health/audio check built into the LEAP portal before any class starts."
      }
     ]
@@ -1422,16 +1190,12 @@ window.CONTENT.objections = {
     "dont": "Do not insist on the link. Do not argue about the caller ID.",
     "best": [
      {
-      "ac": "Shreya Prakash",
-      "call": "CAe411932edc5edbec5249a05d1810bddf",
       "score": 3,
       "response": "Reassured the parent the portal link and credentials were official and also sent from the AC's official email for verification."
      }
     ],
     "avoid": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA2278abd6548faeed30279ecacba67bc4",
       "response": "AC explained it's an IVR/system-generated call and reassured her she can register directly on the website."
      }
     ]
@@ -1454,21 +1218,15 @@ window.CONTENT.objections = {
     "dont": "Do not ask them to drop the other provider. Do not close the profile without asking what they are missing.",
     "best": [
      {
-      "ac": "Sudhanshu Shrivastava",
-      "call": "CA3f7ecc11f351db527ce3dc15ff262f16",
       "score": 4,
       "response": "Reframed Cuemath as complementary conceptual/foundational support (not a replacement) and proposed a 3-month trial to test fit without committing long-term."
      }
     ],
     "avoid": [
      {
-      "ac": "Arnav Suri",
-      "call": "CA700e1e92735396881972900741107740",
       "response": "No direct response — AC did not probe into the other class or its issues."
      },
      {
-      "ac": "Navneet Kumar",
-      "call": "CAec4197ec1e4f6d805e8bb518a2165028",
       "response": "Acknowledged and offered to close the profile."
      }
     ]
@@ -1491,28 +1249,20 @@ window.CONTENT.objections = {
     "dont": "Do not accept the child's no without asking why. Do not push a 12-month plan here.",
     "best": [
      {
-      "ac": "Arnav Suri",
-      "call": "CAe7bce94374c537a480ebfce7f7a719df",
       "score": 5,
       "response": "Reframed the eval as a diagnostic, not a test/pressure situation, and offered a low-commitment 1-month plan to try it out."
      },
      {
-      "ac": "Navneet Kumar",
-      "call": "CAe054d1477f7289ed659c048ec892746c",
       "score": 4,
       "response": "We have got the report, we have seen that fluency is the best area... but understanding is not very consistent in depth, so that is something we work upon... if he doesn't answer, they switch to the basics of that topic, and once basics are clear, then they go to advance."
      }
     ],
     "avoid": [
      {
-      "ac": "Navneet Kumar",
-      "call": "CAc147c3a1da516cb5a8b8b7ee6925cdd1",
       "response": "Acknowledged, explained kids often need a few sessions to settle into interactive online format, invited her to try again next year"
      },
      {
-      "ac": "Jaya Gehlot",
-      "call": "CA70721d8462c8fef0048af565348f093e",
-      "response": "Offered to speak with Ryan directly to understand and bridge the gaps from the evaluation."
+      "response": "Offered to speak with [child] directly to understand and bridge the gaps from the evaluation."
      }
     ]
    }
@@ -1526,7 +1276,7 @@ window.CONTENT.objections = {
     "n": 44,
     "verbatims": [
      "I want her to only focus on AMC-8. I don't want her to do anything else... I don't want her to get loose focus, get distracted with doing many other things.",
-     "We haven't decided yet because you know yesterday, Ira was not well and she was not feeling well. So we couldn't get chance to talk about this thing yesterday.",
+     "We haven't decided yet because you know yesterday, [child] was not well and she was not feeling well. So we couldn't get chance to talk about this thing yesterday.",
      "I particularly wanted to do tomorrow only on Tuesday... which brings good luck to me because he never never gone for any classes so I always start things on Tuesday",
      "I'm in office right now. Can you give me time... once I go home, I'll register him."
     ],
@@ -1534,33 +1284,23 @@ window.CONTENT.objections = {
     "dont": "Do not guess. Do not talk past the concern.",
     "best": [
      {
-      "ac": "Shweta Sharma",
-      "call": "CA12dfb78b585da190a1278130e34cd07b",
       "score": 4,
       "response": "Understood, okay, if it's related to that, I will not pressurize you, definitely just go ahead tomorrow, no problem"
      },
      {
-      "ac": "Somya Jain",
-      "call": "CA6d0ba107fe67d0d5b93ebc0cc06fef27",
       "score": 4,
       "response": "No, only 6-month and 12-month plans available; per-session cost is worse on shorter tenure so 12-month is best value given she's confident in the tutor."
      },
      {
-      "ac": "Ruffaida Razak",
-      "call": "CAef9a1f1b0cbc5b8a95786d12bed42b45",
       "score": 4,
       "response": "AC confirmed it's fine to start classes in either September or October based on the parent's logistics."
      }
     ],
     "avoid": [
      {
-      "ac": "Ruffaida Razak",
-      "call": "CA01d97ad84737bd506d8275938f1d0f1d",
       "response": "No worries, is it possible if we can connect before the end of the day? Meanwhile you can discuss with your family."
      },
      {
-      "ac": "Anand raj",
-      "call": "CAf2c550baf1e6b218439f84e2719b32fd",
       "response": "Clarified the pause mechanic but did not have another alternative once parent rejected it."
      }
     ]
@@ -1570,7 +1310,7 @@ window.CONTENT.objections = {
     "n": 23,
     "verbatims": [
      "Let me spend some time on that one. Weekend is busy, that's why I didn't get enough time. So give me some time, maybe a few days.",
-     "I don't know who Neera is. I have received the below email in error and I still have not heard back from them.",
+     "I don't know who [child] is. I have received the below email in error and I still have not heard back from them.",
      "I didn't get any email of his evaluation report. We said you are going to send email. I didn't get any.",
      "the reports what QMath gave me was a little bit lower than what he used to score... which I was not okay"
     ],
@@ -1578,33 +1318,23 @@ window.CONTENT.objections = {
     "dont": "Do not defend the number. Do not say the child is 'behind'.",
     "best": [
      {
-      "ac": "Arnav Suri",
-      "call": "CAe7bce94374c537a480ebfce7f7a719df",
       "score": 5,
       "response": "Reassured the plan starts at grade-6 level and only revisits earlier-grade concepts when a specific gap blocks progress (e.g., using a geometry example), not a full grade rollback; emphasized building confidence, not re-teaching from scratch."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CA93be5bfa35db231f9a0f62e4d75b92b0",
       "score": 5,
-      "response": "I can go ahead and schedule another session for Kaira as per grade third level... or the coach, in the first live session, can solve some questions together according to grade third and grade four and create a learning plan from there"
+      "response": "I can go ahead and schedule another session for [child] as per grade third level... or the coach, in the first live session, can solve some questions together according to grade third and grade four and create a learning plan from there"
      },
      {
-      "ac": "Shreya Prakash",
-      "call": "CA258e875f1bdbb08a0fcfbaa00b94a182",
       "score": 4,
-      "response": "Apologized, found and corrected the data mix-up (child record mislabeled 'Neera' under this parent's phone number), and confirmed the correction was made in-call."
+      "response": "Apologized, found and corrected the data mix-up (child record mislabeled '[child]' under this parent's phone number), and confirmed the correction was made in-call."
      }
     ],
     "avoid": [
      {
-      "ac": "Jaya Gehlot",
-      "call": "CAe75c382903657060d2c3c7e302cd0d4e",
       "response": "Agreed to follow up later in the week rather than push for an immediate walkthrough."
      },
      {
-      "ac": "Juhi Srivastava",
-      "call": "CAed6e296155f10b40c2ad281da029a7be",
       "response": "It was shared on the registered email ID... I'm extremely sorry for the issue here. I'll rectify this in the system."
      }
     ]
@@ -1622,33 +1352,23 @@ window.CONTENT.objections = {
     "dont": "Do not leave tech setup to the first class.",
     "best": [
      {
-      "ac": "Yash Shukla",
-      "call": "CA897a9b354d5a0a389a30e9ef9b994da7",
       "score": 4,
       "response": "No — you will receive a call and money is only charged after your consent; can cancel at any point in the app."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CA4077a687fc3de68d08df559e4328fb74",
       "score": 4,
       "response": "AC agreed, sent the portal link over WhatsApp for the parent to complete whenever convenient (today or tomorrow morning)."
      },
      {
-      "ac": "Yash Shukla",
-      "call": "CA26f892ddc704ce6d7045715cc4259433",
       "score": 3,
       "response": "Explained the parent app lets you pause a class up to 15 min before start and it gets rescheduled with the coach, so no session is lost."
      }
     ],
     "avoid": [
      {
-      "ac": "Harsh Keshwani",
-      "call": "CA4959a8e425ce1979f8e60b03e417ca49",
       "response": "we have other platforms where IESL or other things are there. The only thing we are avoiding that is to make them offline. They are trying to reduce the screen time."
      },
      {
-      "ac": "Navneet Kumar",
-      "call": "CA53c0c900c62c709b67e63e01344fa7cc",
       "response": "Explained the mapped tutor's hold would be released today and the profile would be closed for now; invited a fresh trial after a month."
      }
     ]
@@ -1666,33 +1386,23 @@ window.CONTENT.objections = {
     "dont": "Do not compare group sizes you cannot verify.",
     "best": [
      {
-      "ac": "Anand raj",
-      "call": "CAfa9c17a8c90a648f9499d7c0fdcb9098",
       "score": 4,
       "response": "AC explained the interactive 1:1 format, daily/weekly progress tracking, and the added MathGym advanced-practice feature."
      },
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CAc5fba634317b40cd78cde9dcdf27eff6",
       "score": 4,
       "response": "Explained the value of personalized one-on-one attention over group classes and suggested the parent try it with the child, noting most parents prefer one-on-one."
      },
      {
-      "ac": "Somya Jain",
-      "call": "CAc21c5fdd5c1485f85db0a58f46733523",
       "score": 3,
       "response": "Agreed to switch future communication to email/WhatsApp group instead of repeated phone calls."
      }
     ],
     "avoid": [
      {
-      "ac": "Arnav Suri",
-      "call": "CA700e1e92735396881972900741107740",
       "response": "AC explained why Cuemath only offers 1:1 sessions and argued this gives better individualized attention than group formats."
      },
      {
-      "ac": "Harsh Keshwani",
-      "call": "CA10dbcf3dbe965f8ff9856b71cbfe9bdd",
       "response": "Explained Cuemath teachers are qualified and based mostly in India, cater to K-5 age group, and asked whether the resistance was based on prior experience or assumption."
      }
     ]
@@ -1711,13 +1421,9 @@ window.CONTENT.objections = {
     "best": [],
     "avoid": [
      {
-      "ac": "Nikhil Pandey",
-      "call": "CAfbcc71bd731c49279165705213dc3eea",
       "response": "Argued that starting now would build foundational strength ahead of the school curriculum and offered flexible scheduling (10am-8pm, any day)."
      },
      {
-      "ac": "Navneet Kumar",
-      "call": "CAfbd9e6e73c9528ed8394335a1f24b78a",
       "response": "Accepted the deferral, said he'd note it with the team, and shared his contact for whenever the parent is ready."
      }
     ]
@@ -1727,22 +1433,18 @@ window.CONTENT.objections = {
     "n": 2,
     "verbatims": [
      "I want to make sure that she enjoys it... I'm not looking for any magic that can happen in a very short period.",
-     "Piyash [Yash] said he'd add 8 referral classes for my son months ago and it's been 3-4 months and it's not updated... I don't want them to come back saying this has to be done first."
+     "[child] [[child]] said he'd add 8 referral classes for my son months ago and it's been 3-4 months and it's not updated... I don't want them to come back saying this has to be done first."
     ],
     "draft": "You get a note after each class in the parent app, a parent-teacher conference at 30 days, and a quarterly review against the milestones. You can message the coach directly between classes.",
     "dont": "Do not promise weekly calls from the coach.",
     "best": [
      {
-      "ac": "Jasmin Chadda",
-      "call": "CA20bbb276f2320f83df6a3260d7683a90",
       "score": 5,
-      "response": "Apologized for the prior AC's (Yash, on medical leave) non-fulfillment, personally took ownership, and offered to email management to add both the 16 sibling + 8 pending referral classes together (24 total) to avoid parent waiting twice."
+      "response": "Apologized for the prior AC's ([child], on medical leave) non-fulfillment, personally took ownership, and offered to email management to add both the 16 sibling + 8 pending referral classes together (24 total) to avoid parent waiting twice."
      }
     ],
     "avoid": [
      {
-      "ac": "Prateek Sachdeva",
-      "call": "CA3081d74945b81446b56a946a526f3cb2",
       "response": "AC redirected to progress/outcome metrics rather than addressing the enjoyment/schedule-fit concern directly."
      }
     ]
