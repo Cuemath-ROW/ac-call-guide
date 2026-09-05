@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AC Call Guide</title>
+<link rel="stylesheet" href="bundle.css">
+<style>
+  /* Layout only. Components come from bundle.css. */
+  html, body { background: var(--bg-primary); color: var(--text-primary); }
+  .app { min-height: 100vh; display: flex; flex-direction: column; }
+  .topbar { display: flex; align-items: center; gap: var(--space-16); padding: var(--space-12) var(--space-24); border-bottom: 1px solid var(--border-tertiary); background: var(--bg-secondary); position: sticky; top: 0; z-index: 20; }
+  .topbar .logo { height: 22px; color: var(--text-primary); }
+  .topbar .spacer { flex: 1; }
+  .topbar .crumb { color: var(--text-secondary); }
+  .timestrip { display: flex; gap: var(--space-8); flex-wrap: wrap; align-items: center; }
+  .tz { display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-8); border-radius: var(--radius-full, 999px); background: var(--bg-tertiary); }
+  .tz .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-tertiary); }
+  .tz.ok .dot { background: var(--success-primary, #2e7d32); }
+  .tz.warn .dot { background: var(--warning-primary, #ed6c02); }
+  .tz.bad .dot { background: var(--error-primary, #c62828); }
+  .tz.ist { background: transparent; border: 1px solid var(--border-tertiary); }
+  main { flex: 1; width: 100%; max-width: 1240px; margin: 0 auto; padding: var(--space-24); box-sizing: border-box; }
+  .home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-16); margin-top: var(--space-24); }
+  .flowcard { cursor: pointer; }
+  .flowcard .num { width: 36px; height: 36px; border-radius: 50%; background: var(--bg-inverse); color: var(--text-on-inverse); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-12); }
+  .guard-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-8); margin-top: var(--space-12); }
+  .guard { display: flex; gap: var(--space-8); align-items: flex-start; padding: var(--space-12); background: var(--bg-secondary); border: 1px solid var(--border-tertiary); border-radius: var(--radius-md, 12px); }
+  .guard .k { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--bg-tertiary); display: inline-flex; align-items: center; justify-content: center; }
+  /* Flow view */
+  .flow { display: grid; grid-template-columns: 280px 1fr; gap: var(--space-24); }
+  .stepper { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 90px); overflow: auto; }
+  .progress { height: 6px; background: var(--bg-tertiary); border-radius: 3px; overflow: hidden; margin: var(--space-12) 0 var(--space-16); }
+  .progress .fill { height: 100%; width: 0; background: var(--bg-inverse); transition: width .2s; }
+  .step-chip { display: flex; gap: var(--space-8); align-items: center; padding: var(--space-8) var(--space-12); border-radius: var(--radius-md, 12px); cursor: pointer; color: var(--text-secondary); }
+  .step-chip:hover { background: var(--bg-tertiary); }
+  .step-chip.current { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-secondary); }
+  .step-chip .dot { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-secondary); display: inline-flex; align-items: center; justify-content: center; }
+  .step-chip.done .dot { background: var(--success-primary, #2e7d32); border-color: transparent; color: white; }
+  .stepcard .goal { color: var(--text-secondary); margin-top: var(--space-4); }
+  .script { background: var(--bg-tertiary); border-left: 3px solid var(--bg-inverse); padding: var(--space-16) var(--space-20); border-radius: var(--radius-md, 12px); margin: var(--space-16) 0; white-space: pre-wrap; }
+  .script .tok { background: var(--bg-secondary); border: 1px dashed var(--border-secondary); padding: 0 var(--space-4); border-radius: 4px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); margin-top: var(--space-16); }
+  .cols ul { margin: var(--space-8) 0 0; padding-left: var(--space-20); }
+  .cols li { margin-bottom: var(--space-4); }
+  .chips { display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-12); }
+  .chip { cursor: pointer; }
+  .stepnav { display: flex; gap: var(--space-8); justify-content: space-between; margin-top: var(--space-24); flex-wrap: wrap; }
+  .ctx { display: flex; gap: var(--space-8); flex-wrap: wrap; align-items: flex-end; margin-bottom: var(--space-16); }
+  .ctx label { display: flex; flex-direction: column; gap: var(--space-4); color: var(--text-secondary); }
+  .ctx input, .ctx select { padding: var(--space-8) var(--space-12); border: 1px solid var(--border-secondary); border-radius: var(--radius-md, 10px); background: var(--bg-secondary); color: var(--text-primary); font: inherit; min-width: 140px; }
+  /* Drawer */
+  .drawer-bg { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 40; display: none; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(720px, 100vw); background: var(--bg-primary); z-index: 50; transform: translateX(100%); transition: transform .2s; display: flex; flex-direction: column; box-shadow: var(--shadow-lg, 0 10px 40px rgba(0,0,0,.2)); }
+  .drawer.open { transform: none; }
+  .drawer-bg.open { display: block; }
+  .drawer .head { display: flex; gap: var(--space-12); align-items: center; padding: var(--space-16) var(--space-24); border-bottom: 1px solid var(--border-tertiary); background: var(--bg-secondary); }
+  .drawer .body { padding: var(--space-24); overflow: auto; flex: 1; }
+  .drawer input.search { width: 100%; padding: var(--space-12); border: 1px solid var(--border-secondary); border-radius: var(--radius-md, 10px); font: inherit; background: var(--bg-secondary); color: var(--text-primary); box-sizing: border-box; }
+  .otype { margin-top: var(--space-24); }
+  .osub { border: 1px solid var(--border-tertiary); border-radius: var(--radius-md, 12px); margin-top: var(--space-8); background: var(--bg-secondary); }
+  .osub > summary { padding: var(--space-12) var(--space-16); cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; }
+  .osub > summary::-webkit-details-marker { display: none; }
+  .osub .inner { padding: 0 var(--space-16) var(--space-16); }
+  .verb { color: var(--text-secondary); font-style: italic; border-left: 2px solid var(--border-secondary); padding-left: var(--space-12); margin: var(--space-8) 0; }
+  .answer { background: var(--bg-tertiary); padding: var(--space-16); border-radius: var(--radius-md, 10px); margin-top: var(--space-12); white-space: pre-wrap; }
+  .ex { margin-top: var(--space-12); padding: var(--space-12); border-radius: var(--radius-md, 10px); border: 1px solid var(--border-tertiary); }
+  .ex.good { border-color: var(--success-primary, #2e7d32); }
+  .ex.bad { border-color: var(--error-primary, #c62828); }
+  .ex .who { color: var(--text-tertiary); margin-bottom: var(--space-4); }
+  table.grid { width: 100%; border-collapse: collapse; margin-top: var(--space-12); }
+  table.grid th, table.grid td { text-align: left; padding: var(--space-8) var(--space-12); border-bottom: 1px solid var(--border-tertiary); vertical-align: top; }
+  table.grid th { color: var(--text-tertiary); }
+  .todo { color: var(--error-primary, #c62828); }
+  .outcome-box { margin-top: var(--space-16); }
+  .outcome-box .gen { background: var(--bg-tertiary); padding: var(--space-16); border-radius: var(--radius-md, 10px); margin-top: var(--space-12); white-space: pre-wrap; }
+  .muted { color: var(--text-secondary); }
+  .tiny { color: var(--text-tertiary); }
+  .hidden { display: none !important; }
+  @media (max-width: 900px) {
+    .flow { grid-template-columns: 1fr; }
+    .stepper { position: static; max-height: none; }
+    .stepper .steps { display: flex; gap: var(--space-8); overflow-x: auto; padding-bottom: var(--space-8); }
+    .step-chip { flex: none; white-space: nowrap; }
+    .cols { grid-template-columns: 1fr; }
+    .topbar { flex-wrap: wrap; }
+    main { padding: var(--space-16); }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <a href="#/" style="display:inline-flex;align-items:center"><img class="logo" src="img/cuemath-wordmark.svg" alt="Cuemath"></a>
+    <span class="type-label-md crumb" id="crumb">AC Call Guide</span>
+    <span class="spacer"></span>
+    <div class="timestrip type-caption" id="timestrip"></div>
+    <button class="btn btn-sm btn-secondary" onclick="openDrawer('objections')">Objections</button>
+    <button class="btn btn-sm btn-secondary" onclick="openDrawer('pricing')">Pricing</button>
+    <button class="btn btn-sm btn-ghost" onclick="askName(true)" id="namebtn" title="Your name for the scripts">Name</button>
+  </header>
+  <main id="main"></main>
+</div>
+
+<div class="drawer-bg" id="drawer-bg" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="head">
+    <span class="type-heading-sm" id="drawer-title">Objections</span>
+    <span class="spacer" style="flex:1"></span>
+    <button class="btn btn-sm btn-ghost" onclick="closeDrawer()">Close</button>
+  </div>
+  <div class="body" id="drawer-body"></div>
+</aside>
+
+<script src="content.js"></script>
+<script>
+/* ============================== state ============================== */
+const C = window.CONTENT;
+const LS = { name: "acg_name", done: "acg_done", ctx: "acg_ctx", tz: "acg_tz" };
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+let acName = store.get(LS.name, "");
+let done = store.get(LS.done, {});          // { flowId: { stepId: true } }
+let ctx = store.get(LS.ctx, { child: "", date: "", parent: "" });
+let parentTz = store.get(LS.tz, "ET");
+let returnTo = null;                        // hash to return to after drawer
+
+/* ============================== helpers ============================== */
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function greetFor(tzId) {
+  const tz = C.timezones.find(t => t.id === tzId) || C.timezones[0];
+  const h = parseInt(new Intl.DateTimeFormat("en-US", { hour: "numeric", hour12: false, timeZone: tz.iana }).format(new Date()), 10);
+  return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+}
+function fill(text) {
+  const map = { AC: acName || "[AC]", child: ctx.child || "[child]", date: ctx.date || "[date]", parent: ctx.parent || "[parent]", greet: greetFor(parentTz) };
+  return esc(text).replace(/\[(AC|child|date|parent|greet)\]/g, (m, k) => `<span class="tok">${esc(map[k])}</span>`)
+                  .replace(/\[([a-z_0-9]+)\]/g, (m, k) => `<span class="tok">[${esc(k)}]</span>`);
+}
+function fillPlain(text) {
+  const map = { AC: acName || "[AC]", child: ctx.child || "[child]", date: ctx.date || "[date]", parent: ctx.parent || "[parent]", greet: greetFor(parentTz) };
+  return String(text).replace(/\[(AC|child|date|parent|greet)\]/g, (m, k) => map[k]);
+}
+function askName(force) {
+  if (acName && !force) return;
+  const n = prompt("Your name, as you say it on calls (used in the scripts):", acName || "");
+  if (n != null && n.trim()) { acName = n.trim(); store.set(LS.name, acName); render(); }
+}
+function flowDone(flow) { const d = done[flow.id] || {}; return flow.steps.filter(s => d[s.id]).length; }
+
+/* ============================== time strip ============================== */
+function renderTime() {
+  const now = new Date();
+  const ist = new Intl.DateTimeFormat("en-IN", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" }).format(now);
+  const cw = C.callWindow;
+  const tzs = C.timezones.map(t => {
+    const h = parseInt(new Intl.DateTimeFormat("en-US", { hour: "numeric", hour12: false, timeZone: t.iana }).format(now), 10);
+    const hm = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: t.iana }).format(now);
+    const cls = (h >= cw.start && h < cw.end) ? "ok" : (h >= cw.cautionStart && h < cw.cautionEnd) ? "warn" : "bad";
+    return `<span class="tz ${cls}" title="${t.label}"><span class="dot"></span>${t.id} ${hm}</span>`;
+  }).join("");
+  document.getElementById("timestrip").innerHTML = `<span class="tz ist">IST ${ist}</span>${tzs}`;
+}
+setInterval(renderTime, 30000);
+
+/* ============================== router ============================== */
+function route() {
+  const h = location.hash.replace(/^#\/?/, "");
+  const [a, b] = h.split("/");
+  if (!a) return renderHome();
+  const flow = C.flows.find(f => f.id === a);
+  if (!flow) return renderHome();
+  const step = flow.steps.find(s => s.id === b) || flow.steps[0];
+  renderFlow(flow, step);
+}
+window.addEventListener("hashchange", route);
+function render() { route(); renderTime(); document.getElementById("namebtn").textContent = acName ? acName : "Your name"; }
+
+/* ============================== home ============================== */
+function renderHome() {
+  document.getElementById("crumb").textContent = C.meta.subtitle;
+  const cards = C.flows.map(f => `
+    <div class="card card-interactive flowcard" onclick="location.hash='#/${f.id}'">
+      <div class="card-content">
+        <div class="num type-label-md">${f.icon}</div>
+        <div class="type-heading-sm">${esc(f.title)}</div>
+        <div class="type-body-md muted" style="margin-top:var(--space-8)">${esc(f.subtitle)}</div>
+        <div class="type-caption tiny" style="margin-top:var(--space-12)">${f.steps.length} steps${flowDone(f) ? ` · ${flowDone(f)} done` : ""}</div>
+      </div>
+    </div>`).join("");
+  const guards = C.guardrails.map((g, i) => `<div class="guard"><span class="k type-caption">${i + 1}</span><span class="type-body-md">${esc(g.text)}</span></div>`).join("");
+  document.getElementById("main").innerHTML = `
+    <div class="type-heading-xl">${esc(C.meta.title)}</div>
+    <p class="type-body-lg muted" style="max-width:820px;margin-top:var(--space-8)">${esc(C.meta.stance)}</p>
+    <div class="type-label-sm type-caps tiny" style="margin-top:var(--space-32)">Start a call</div>
+    <div class="home-grid">${cards}</div>
+    <div class="type-label-sm type-caps tiny" style="margin-top:var(--space-40)">Ten rules that hold on every call</div>
+    <div class="guard-list">${guards}</div>
+    <p class="type-caption tiny" style="margin-top:var(--space-32)">${esc(C.meta.version)}. Open Objections or Pricing from the top bar at any point in a call.</p>`;
+}
+
+/* ============================== flow ============================== */
+function renderFlow(flow, step) {
+  askName(false);
+  document.getElementById("crumb").textContent = flow.title;
+  const d = done[flow.id] || {};
+  const idx = flow.steps.indexOf(step);
+  const pct = Math.round(100 * flowDone(flow) / flow.steps.length);
+  const chips = flow.steps.map((s, i) => `
+    <div class="step-chip ${s.id === step.id ? "current" : ""} ${d[s.id] ? "done" : ""}" onclick="location.hash='#/${flow.id}/${s.id}'">
+      <span class="dot type-caption">${d[s.id] ? "✓" : i + 1}</span><span class="type-label-md">${esc(s.title)}</span></div>`).join("");
+  const guards = (step.guardrails || []).map(id => C.guardrails.find(g => g.id === id)).filter(Boolean)
+    .map(g => `<div class="guard"><span class="k type-caption">!</span><span class="type-body-md">${esc(g.text)}</span></div>`).join("");
+  const objChips = (step.objections || []).map(key => {
+    const [t, k] = key.split("."); const sub = C.objections?.[t]?.subs?.[k]; if (!sub) return "";
+    return `<span class="badge badge-ghost badge-interactive chip" onclick="openObjection('${t}','${k}')">${esc(sub.label)}</span>`;
+  }).join("");
+  const outcomes = step.outcomes ? renderOutcomes() : "";
+  const prev = flow.steps[idx - 1], next = flow.steps[idx + 1];
+  document.getElementById("main").innerHTML = `
+    <div class="flow">
+      <aside class="stepper">
+        <div class="type-heading-sm">${esc(flow.title)}</div>
+        <div class="type-caption tiny" style="margin-top:var(--space-4)">${flowDone(flow)} of ${flow.steps.length} steps done</div>
+        <div class="progress"><div class="fill" style="width:${pct}%"></div></div>
+        <div class="steps">${chips}</div>
+        <div style="margin-top:var(--space-16);display:flex;gap:var(--space-8);flex-wrap:wrap">
+          <button class="btn btn-sm btn-ghost" onclick="newCall('${flow.id}')">New call</button>
+          <button class="btn btn-sm btn-ghost" onclick="location.hash='#/'">All flows</button>
+        </div>
+      </aside>
+      <section>
+        <div class="ctx">
+          <label class="type-caption">Child<input value="${esc(ctx.child)}" placeholder="name" oninput="setCtx('child',this.value)"></label>
+          <label class="type-caption">Eval date<input value="${esc(ctx.date)}" placeholder="e.g. Sep 2" oninput="setCtx('date',this.value)"></label>
+          <label class="type-caption">Parent<input value="${esc(ctx.parent)}" placeholder="name" oninput="setCtx('parent',this.value)"></label>
+          <label class="type-caption">Parent's zone<select onchange="setTz(this.value)">${C.timezones.map(t => `<option value="${t.id}" ${t.id === parentTz ? "selected" : ""}>${t.label}</option>`).join("")}</select></label>
+        </div>
+        <div class="card stepcard"><div class="card-content">
+          <div class="type-label-sm type-caps tiny">Step ${idx + 1} of ${flow.steps.length}</div>
+          <div class="type-heading-lg" style="margin-top:var(--space-4)">${esc(step.title)}</div>
+          <div class="type-body-md goal">${esc(step.goal)}</div>
+          ${step.script ? `<div class="script type-body-lg">${fill(step.script)}</div>` : ""}
+          <div class="cols">
+            <div><div class="type-label-sm type-caps tiny">Say this</div><ul class="type-body-md">${(step.say || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+            <div><div class="type-label-sm type-caps tiny">Not this</div><ul class="type-body-md">${(step.avoid || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+          </div>
+          ${objChips ? `<div class="type-label-sm type-caps tiny" style="margin-top:var(--space-20)">If the parent says…</div><div class="chips">${objChips}</div>` : ""}
+          ${guards ? `<div class="guard-list" style="margin-top:var(--space-20)">${guards}</div>` : ""}
+          ${outcomes}
+          <div class="stepnav">
+            <div>${prev ? `<button class="btn btn-md btn-ghost" onclick="location.hash='#/${flow.id}/${prev.id}'">← ${esc(prev.title)}</button>` : ""}</div>
+            <div style="display:flex;gap:var(--space-8)">
+              <button class="btn btn-md ${d[step.id] ? "btn-secondary" : "btn-primary"}" onclick="toggleDone('${flow.id}','${step.id}')">${d[step.id] ? "Marked done" : "Mark done"}</button>
+              ${next ? `<button class="btn btn-md btn-neutral" onclick="markAndNext('${flow.id}','${step.id}','${next.id}')">Done, next →</button>` : ""}
+            </div>
+          </div>
+        </div></div>
+      </section>
+    </div>`;
+}
+function setCtx(k, v) { ctx[k] = v; store.set(LS.ctx, ctx); refreshTokens(); }
+function setTz(v) { parentTz = v; store.set(LS.tz, v); route(); }
+function refreshTokens() { document.querySelectorAll(".script, .gen").forEach(el => { if (el.dataset.raw) el.innerHTML = fill(el.dataset.raw); }); route(); }
+function toggleDone(f, s) { done[f] = done[f] || {}; done[f][s] = !done[f][s]; store.set(LS.done, done); route(); }
+function markAndNext(f, s, n) { done[f] = done[f] || {}; done[f][s] = true; store.set(LS.done, done); location.hash = `#/${f}/${n}`; }
+function newCall(f) { if (!confirm("Start a new call? This clears the ticks and the child/parent fields.")) return; done[f] = {}; ctx = { child: "", date: "", parent: "" }; store.set(LS.done, done); store.set(LS.ctx, ctx); location.hash = `#/${f}`; route(); }
+
+/* ============================== outcomes ============================== */
+let chosenOutcome = null;
+function renderOutcomes() {
+  const opts = C.outcomes.map(o => `<option value="${o.id}" ${chosenOutcome === o.id ? "selected" : ""}>${esc(o.label)}</option>`).join("");
+  const o = C.outcomes.find(x => x.id === chosenOutcome);
+  return `<div class="outcome-box">
+    <div class="type-label-sm type-caps tiny">How did the call end?</div>
+    <div class="ctx" style="margin-top:var(--space-8)"><select onchange="chosenOutcome=this.value;route()"><option value="">Pick the outcome</option>${opts}</select></div>
+    ${o ? `<div class="type-label-sm type-caps tiny">Say to close</div><div class="gen type-body-lg">${fill(o.closing)}</div>
+           <div class="type-label-sm type-caps tiny" style="margin-top:var(--space-16)">Send after the call (WhatsApp / email)</div><div class="gen type-body-md" id="fu-text">${fill(o.followup)}</div>
+           <div style="margin-top:var(--space-8)"><button class="btn btn-sm btn-secondary" onclick="copyFollowup('${o.id}')">Copy message</button> <span class="type-caption tiny">Fill the remaining brackets before sending.</span></div>` : ""}
+  </div>`;
+}
+function copyFollowup(id) { const o = C.outcomes.find(x => x.id === id); navigator.clipboard?.writeText(fillPlain(o.followup)).then(() => alert("Copied.")); }
+
+/* ============================== drawers ============================== */
+function openDrawer(kind, focus) {
+  document.getElementById("drawer").classList.add("open"); document.getElementById("drawer-bg").classList.add("open");
+  document.getElementById("drawer-title").textContent = kind === "pricing" ? "Payment plan" : "Objections";
+  document.getElementById("drawer-body").innerHTML = kind === "pricing" ? renderPricing() : renderObjections("");
+  if (focus) { const el = document.getElementById("o-" + focus); if (el) { el.open = true; el.scrollIntoView({ block: "start" }); } }
+}
+function closeDrawer() { document.getElementById("drawer").classList.remove("open"); document.getElementById("drawer-bg").classList.remove("open"); }
+function openObjection(t, k) { openDrawer("objections", t + "-" + k); }
+function renderObjections(q) {
+  q = (q || "").toLowerCase();
+  const types = Object.entries(C.objections || {}).map(([t, o]) => {
+    const subs = Object.entries(o.subs).filter(([k, s]) => !q || (s.label + " " + s.draft + " " + s.verbatims.join(" ")).toLowerCase().includes(q));
+    if (!subs.length) return "";
+    return `<div class="otype"><div class="type-heading-sm">${esc(o.label)} <span class="type-caption tiny">${subs.reduce((a, [, s]) => a + s.n, 0)} on calls</span></div>
+      ${subs.map(([k, s]) => `<details class="osub" id="o-${t}-${k}">
+        <summary><span class="type-label-md">${esc(s.label)}</span><span class="badge badge-ghost badge-sm">${s.n}</span></summary>
+        <div class="inner">
+          ${s.verbatims.map(v => `<div class="verb type-body-md">“${esc(v)}”</div>`).join("")}
+          <div class="type-label-sm type-caps tiny" style="margin-top:var(--space-12)">Answer <span class="todo">DRAFT</span></div>
+          <div class="answer type-body-lg">${fill(s.draft)}</div>
+          ${s.dont ? `<div class="type-body-md" style="margin-top:var(--space-8)"><strong>Avoid:</strong> ${esc(s.dont)}</div>` : ""}
+          ${s.best.length ? `<details style="margin-top:var(--space-12)"><summary class="type-label-md" style="cursor:pointer">What strong calls did (${s.best.length})</summary>
+             ${s.best.map(b => `<div class="ex good"><div class="who type-caption">${esc(b.ac)} · call ${esc(b.call.slice(0, 10))} · handling ${b.score}/5</div><div class="type-body-md">${esc(b.response)}</div></div>`).join("")}</details>` : ""}
+          ${s.avoid.length ? `<details style="margin-top:var(--space-8)"><summary class="type-label-md" style="cursor:pointer">What did not land (${s.avoid.length})</summary>
+             ${s.avoid.map(b => `<div class="ex bad"><div class="who type-caption">${esc(b.ac)} · call ${esc(b.call.slice(0, 10))}</div><div class="type-body-md">${esc(b.response)}</div></div>`).join("")}</details>` : ""}
+        </div></details>`).join("")}</div>`;
+  }).join("");
+  return `<input class="search type-body-md" placeholder="Search objections (e.g. monthly, Kumon, coach)" value="${esc(q)}" oninput="document.getElementById('obj-list').innerHTML=renderObjectionsList(this.value)">
+          <div id="obj-list">${types || `<p class="muted">No match.</p>`}</div>`;
+}
+function renderObjectionsList(q) { const html = renderObjections(q); return html.substring(html.indexOf('<div id="obj-list">') + 19, html.lastIndexOf("</div>")); }
+function renderPricing() {
+  const p = C.pricing;
+  const rows = p.grid.map(r => `<tr><td>${esc(r.tier)}</td><td>${esc(r.tenure)}</td><td>${r.classes}</td><td>${todo(r.perClass)}</td><td><strong>${todo(r.total)}</strong></td><td>${todo(r.fee)}</td><td class="type-caption tiny">${esc(r.note)}</td></tr>`).join("");
+  return `<div class="card card-error-tint"><div class="card-content type-body-md">${esc(p.todo)}</div></div>
+    <div class="type-heading-sm" style="margin-top:var(--space-24)">Tiers</div>
+    <table class="grid type-body-md"><tr><th>Tier</th><th>Class</th><th>Grades</th><th>Coach</th></tr>${p.tiers.map(t => `<tr><td>${esc(t.label)}</td><td>${esc(t.classLength)}</td><td>${todo(t.grades)}</td><td>${esc(t.coach)}</td></tr>`).join("")}</table>
+    <div class="type-heading-sm" style="margin-top:var(--space-24)">Plans</div>
+    <table class="grid type-body-md"><tr><th>Tier</th><th>Tenure</th><th>Classes</th><th>Per class</th><th>Total</th><th>Platform fee</th><th></th></tr>${rows}</table>
+    <div class="type-heading-sm" style="margin-top:var(--space-24)">Rules to state</div>
+    <ul class="type-body-md">${p.rules.map(r => `<li style="margin-bottom:var(--space-8)">${todo(r)}</li>`).join("")}</ul>
+    <div class="type-heading-sm" style="margin-top:var(--space-24)">How to present the plan</div>
+    <ol class="type-body-md">${p.sequence.map(r => `<li style="margin-bottom:var(--space-8)">${esc(r)}</li>`).join("")}</ol>`;
+}
+function todo(s) { s = esc(s); return s.replace(/TODO[^.]*\.?|\?/g, m => `<span class="todo">${m}</span>`); }
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+/* ============================== boot ============================== */
+render();
+</script>
+</body>
+</html>
