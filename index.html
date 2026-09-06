@@ -320,7 +320,7 @@ function renderPricing() {
   const rows = p.grid.map(r => `<tr><td>${esc(r.tier)}</td><td>${esc(r.tenure)}</td><td>${r.classes}</td><td>${todo(r.perClass)}</td><td><strong>${todo(r.total)}</strong></td><td>${todo(r.fee)}</td><td class="type-caption tiny">${esc(r.note)}</td></tr>`).join("");
   return `<div class="card card-error-tint"><div class="card-content type-body-md">${esc(p.todo)}</div></div>
     <div class="type-heading-sm" style="margin-top:var(--space-24)">Tiers</div>
-    <table class="grid type-body-md"><tr><th>Tier</th><th>Class</th><th>Grades</th><th>Coach</th></tr>${p.tiers.map(t => `<tr><td>${esc(t.label)}</td><td>${esc(t.classLength)}</td><td>${todo(t.grades)}</td><td>${esc(t.coach)}</td></tr>`).join("")}</table>
+    <table class="grid type-body-md"><tr><th>Tier</th><th>Class</th><th>Grades</th></tr>${p.tiers.map(t => `<tr><td>${esc(t.label)}</td><td>${esc(t.classLength)}</td><td>${todo(t.grades)}</td></tr>`).join("")}</table>
     <div class="type-heading-sm" style="margin-top:var(--space-24)">Plans</div>
     <table class="grid type-body-md"><tr><th>Tier</th><th>Tenure</th><th>Classes</th><th>Per class</th><th>Total</th><th>Platform fee</th><th></th></tr>${rows}</table>
     <div class="type-heading-sm" style="margin-top:var(--space-24)">Rules to state</div>

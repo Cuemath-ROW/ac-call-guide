@@ -66,8 +66,8 @@ window.CONTENT = {
   pricing: {
     todo: "TODO: confirm every number in this grid before launch. Figures below are placeholders taken from the sample pricing email (Grades 6-7, Standard) and the most-quoted numbers on calls.",
     tiers: [
-      { id: "basic",    label: "Basic",    classLength: "40 min", grades: "TODO (e.g. K-5)", coach: "US-licensed specialist coach" },
-      { id: "standard", label: "Standard", classLength: "55 min", grades: "TODO (e.g. 3-8)", coach: "Cuemath senior coach" }
+      { id: "basic",    label: "Basic",    classLength: "40 min", grades: "K to 5" },
+      { id: "standard", label: "Standard", classLength: "55 min", grades: "3 to 7" }
     ],
     grid: [
       { tier: "Standard", tenure: "12 months", classes: 104, perClass: "$20.00", total: "$2,080", fee: "TODO", note: "Platform fee waived on 12-month? TODO" },
