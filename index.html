@@ -305,7 +305,7 @@ function renderObjections(q) {
           <div class="type-label-sm type-caps tiny" style="margin-top:var(--space-12)">Answer <span class="todo">DRAFT</span></div>
           <div class="answer type-body-lg">${fill(s.draft)}</div>
           ${s.dont ? `<div class="type-body-md" style="margin-top:var(--space-8)"><strong>Avoid:</strong> ${esc(s.dont)}</div>` : ""}
-          ${s.best.length ? `<details style="margin-top:var(--space-12)"><summary class="type-label-md" style="cursor:pointer">What strong calls did (${s.best.length})</summary>
+          ${s.best.length ? `<details style="margin-top:var(--space-12)"><summary class="type-label-md" style="cursor:pointer">What strong calls did (${s.best.length})</summary><div class="type-caption tiny" style="margin:var(--space-4) 0">Real calls from August 2026. Any mention of a 3-month plan is historical: only 6 and 12-month plans exist now.</div>
              ${s.best.map(b => `<div class="ex good"><div class="who type-caption">Real call · objection handling ${b.score}/5</div><div class="type-body-md">${esc(b.response)}</div></div>`).join("")}</details>` : ""}
           ${s.avoid.length ? `<details style="margin-top:var(--space-8)"><summary class="type-label-md" style="cursor:pointer">What did not land (${s.avoid.length})</summary>
              ${s.avoid.map(b => `<div class="ex bad"><div class="who type-caption">Real call · left unresolved</div><div class="type-body-md">${esc(b.response)}</div></div>`).join("")}</details>` : ""}
@@ -315,19 +315,54 @@ function renderObjections(q) {
           <div id="obj-list">${types || `<p class="muted">No match.</p>`}</div>`;
 }
 function renderObjectionsList(q) { const html = renderObjections(q); return html.substring(html.indexOf('<div id="obj-list">') + 19, html.lastIndexOf("</div>")); }
+let priceBand = "35", priceTier = null, priceFreq = 2;
 function renderPricing() {
   const p = C.pricing;
-  const rows = p.grid.map(r => `<tr><td>${esc(r.tier)}</td><td>${esc(r.tenure)}</td><td>${r.classes}</td><td>${todo(r.perClass)}</td><td><strong>${todo(r.total)}</strong></td><td>${todo(r.fee)}</td><td class="type-caption tiny">${esc(r.note)}</td></tr>`).join("");
-  return `<div class="card card-error-tint"><div class="card-content type-body-md">${esc(p.todo)}</div></div>
-    <div class="type-heading-sm" style="margin-top:var(--space-24)">Tiers</div>
-    <table class="grid type-body-md"><tr><th>Tier</th><th>Class</th><th>Grades</th></tr>${p.tiers.map(t => `<tr><td>${esc(t.label)}</td><td>${esc(t.classLength)}</td><td>${todo(t.grades)}</td></tr>`).join("")}</table>
-    <div class="type-heading-sm" style="margin-top:var(--space-24)">Plans</div>
-    <table class="grid type-body-md"><tr><th>Tier</th><th>Tenure</th><th>Classes</th><th>Per class</th><th>Total</th><th>Platform fee</th><th></th></tr>${rows}</table>
-    <div class="type-heading-sm" style="margin-top:var(--space-24)">Rules to state</div>
-    <ul class="type-body-md">${p.rules.map(r => `<li style="margin-bottom:var(--space-8)">${todo(r)}</li>`).join("")}</ul>
+  const band = p.bands.find(b => b.key === priceBand) || p.bands[0];
+  const tier = band.plans.find(t => t.name === priceTier) || band.plans.find(t => t.recommended) || band.plans[0];
+  const freq = p.frequencies.find(f => f.perWeek === priceFreq) || p.frequencies[0];
+  const bandTabs = p.bands.map(b => `<button class="tab ${b.key === band.key ? "is-active" : ""}" onclick="priceBand='${b.key}';priceTier=null;redrawPricing()">${esc(b.label)}</button>`).join("");
+  const tierTabs = band.plans.length > 1 ? `<div class="tab-list" style="margin-top:var(--space-12)">${band.plans.map(t => `<button class="tab ${t.name === tier.name ? "is-active" : ""}" onclick="priceTier='${t.name}';redrawPricing()">${esc(t.name)} · ${esc(t.length)}</button>`).join("")}</div>` : "";
+  const freqBtns = p.frequencies.map(f => `<button class="btn btn-sm ${f.perWeek === freq.perWeek ? "btn-neutral" : "btn-secondary"}" onclick="priceFreq=${f.perWeek};redrawPricing()">${esc(f.label)}${f.recommended ? " · recommended" : ""}</button>`).join(" ");
+  const cards = p.tenures.map(t => {
+    const per = tier.perClass[String(t.months)]; const count = Math.round(t.weeks * freq.perWeek); const total = Math.round(per * count);
+    const fee = p.platformFee[String(t.months)];
+    const perDisp = per % 1 === 0 ? String(per) : per.toFixed(2);
+    return `<div class="card ${t.recommended ? "card-brand-tint" : ""}"><div class="card-content">
+      <div class="type-label-sm type-caps tiny" style="min-height:1.2em">${t.recommended ? "Recommended" : ""}</div>
+      <div class="type-label-md muted" style="margin-top:var(--space-8)">${esc(t.label)}</div>
+      <div style="display:flex;align-items:baseline;gap:var(--space-4);margin-top:var(--space-8)"><span class="type-display-md" style="font-size:2.6rem;line-height:1">$${perDisp}</span><span class="type-caption tiny">/class</span></div>
+      <div style="margin-top:var(--space-20);padding-top:var(--space-12);border-top:1px solid var(--border-tertiary)">
+        <div class="type-body-md"><strong>$${total.toLocaleString()}</strong> <span class="muted">coaching fee</span></div>
+        <div class="type-caption tiny" style="margin-top:2px">${count} classes · billed every ${t.weeks} weeks</div>
+        ${fee ? (fee.waived
+          ? `<div class="card card-success-tint" style="margin-top:var(--space-12)"><div class="card-content" style="padding:var(--space-8) var(--space-12)"><span class="type-label-md"><s class="tiny">$${fee.amount}</s> platform fee waived</span></div></div>`
+          : `<div class="card" style="margin-top:var(--space-12)"><div class="card-content" style="padding:var(--space-8) var(--space-12)"><span class="type-label-md">+ $${fee.amount} platform fee</span> <span class="type-caption tiny">charged once</span></div></div>`) : ""}
+      </div></div></div>`;
+  }).join("");
+  const trust = p.trust.map(t => `<div class="card"><div class="card-content">
+      <div class="type-label-sm type-caps tiny">${esc(t.overline)}</div>
+      <div class="type-heading-sm" style="margin-top:var(--space-8)">${esc(t.title)}</div>
+      <div class="type-body-md muted" style="margin-top:var(--space-4)">${fill(t.text)}</div></div></div>`).join("");
+  return `<div class="type-caption tiny">${esc(p.source)}</div>
+    <div class="type-label-sm type-caps tiny" style="margin-top:var(--space-20)">Grade ${fill("[child]")} is moving into</div>
+    <div class="tabs" style="margin-top:var(--space-8)"><div class="tab-list" role="tablist">${bandTabs}</div>${tierTabs}</div>
+    <div class="card" style="margin-top:var(--space-16)"><div class="card-content">
+      <div class="type-heading-sm">Plans available</div>
+      <div class="type-caption muted" style="margin-top:var(--space-4)">Live, 1-on-1 · ${freq.perWeek} classes per week · <strong>${esc(tier.length)} classes</strong> · ${esc(band.grades)}</div>
+      <div style="margin-top:var(--space-12);display:flex;gap:var(--space-8);flex-wrap:wrap">${freqBtns}</div>
+      <div class="type-body-md" style="margin-top:var(--space-16);padding:var(--space-12) var(--space-16);background:var(--bg-tertiary);border-radius:var(--radius-md,10px)">${fill(tier.desc)}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-16);margin-top:var(--space-16)">${cards}</div>
+      <div class="type-label-sm type-caps tiny" style="margin-top:var(--space-20)">Every plan includes</div>
+      <ul class="type-body-md" style="margin:var(--space-8) 0 0;padding-left:var(--space-20)">${p.includes.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
+    </div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-12);margin-top:var(--space-16)">${trust}</div>
     <div class="type-heading-sm" style="margin-top:var(--space-24)">How to present the plan</div>
-    <ol class="type-body-md">${p.sequence.map(r => `<li style="margin-bottom:var(--space-8)">${esc(r)}</li>`).join("")}</ol>`;
+    <ol class="type-body-md">${p.sequence.map(r => `<li style="margin-bottom:var(--space-8)">${fill(r)}</li>`).join("")}</ol>
+    <div class="type-heading-sm" style="margin-top:var(--space-24)">Rules to state</div>
+    <ul class="type-body-md">${p.rules.map(r => `<li style="margin-bottom:var(--space-8)">${todo(r)}</li>`).join("")}</ul>`;
 }
+function redrawPricing() { document.getElementById("drawer-body").innerHTML = renderPricing(); }
 function todo(s) { s = esc(s); return s.replace(/TODO[^.]*\.?|\?/g, m => `<span class="todo">${m}</span>`); }
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
 

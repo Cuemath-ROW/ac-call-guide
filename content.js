@@ -62,39 +62,63 @@ window.CONTENT = {
       followup: "Hi [parent], [AC] from Cuemath. As discussed I have closed [child]'s profile and you will not receive further calls from us. The MathFit report remains yours to use. Wishing [child] all the best." }
   ],
 
-  /* ---------- Pricing: TODO admissions lead to fill the real grid ---------- */
+  /* ---------- Pricing: mirrored from the live US evaluation flow (report_service.py PRICING_BANDS, HG-locked) ----------
+     Bands key on the RISING grade (the grade the child moves into next year).
+     Tenures: 6 and 12 months only (3-month retired 2026-08-05). 12 months is the recommended tenure.
+     Class count = 2 classes a week (52 / 104); 3 a week is possible (78 / 156). Price is per class.
+     Platform fee (2026-08-26): $90 on the 6-month plan, $120 on the 12-month plan but waived. ---------- */
   pricing: {
-    todo: "TODO: confirm every number in this grid before launch. Figures below are placeholders taken from the sample pricing email (Grades 6-7, Standard) and the most-quoted numbers on calls.",
-    tiers: [
-      { id: "basic",    label: "Basic",    classLength: "40 min", grades: "K to 5" },
-      { id: "standard", label: "Standard", classLength: "55 min", grades: "3 to 7" }
+    source: "Mirrors the pricing page inside the US evaluation flow as of 2026-09-06. If that page changes, change it here too.",
+    frequencies: [ { perWeek: 2, label: "2 classes a week", recommended: true }, { perWeek: 3, label: "3 classes a week", recommended: false } ],
+    tenures: [ { months: 6, label: "6 Months", weeks: 26, recommended: false }, { months: 12, label: "12 Months", weeks: 52, recommended: true } ],
+    platformFee: { "6": { amount: 90, waived: false }, "12": { amount: 120, waived: true } },
+    bands: [
+      { key: "k2", label: "Kindergarten to Grade 2", grades: "Rising K, 1, 2",
+        plans: [ { name: "Basic", length: "40 min", recommended: true, perClass: { "6": 17, "12": 15 },
+                   desc: "Twice-a-week 1-on-1 classes building number sense and early operations at [child]'s pace." } ] },
+      { key: "35", label: "Grades 3 to 5", grades: "Rising 3, 4, 5",
+        plans: [ { name: "Standard", length: "55 min", recommended: true, perClass: { "6": 22.5, "12": 20 },
+                   desc: "Twice-a-week 1-on-1 classes covering [child]'s full grade-level math, with time in every class for the areas the report flagged." },
+                 { name: "Basic", length: "40 min", recommended: false, perClass: { "6": 17, "12": 15 },
+                   desc: "Shorter twice-a-week 1-on-1 classes focused on the foundations the report flagged." } ] },
+      { key: "67", label: "Grades 6 and 7", grades: "Rising 6, 7",
+        plans: [ { name: "Standard", length: "55 min", recommended: true, perClass: { "6": 22.5, "12": 20 },
+                   desc: "Twice-a-week 1-on-1 classes covering [child]'s full grade-level math." } ] },
+      { key: "hs", label: "Accelerated (High School)", grades: "Rising 8 to 12",
+        plans: [ { name: "High School", length: "55 min", recommended: true, perClass: { "6": 28.5, "12": 25.5 },
+                   desc: "High-school math, including Algebra, Geometry and Pre-Calculus, with a coach who specialises in the high-school curriculum and exam preparation." } ] }
     ],
-    grid: [
-      { tier: "Standard", tenure: "12 months", classes: 104, perClass: "$20.00", total: "$2,080", fee: "TODO", note: "Platform fee waived on 12-month? TODO" },
-      { tier: "Standard", tenure: "6 months",  classes: 52,  perClass: "$22.50", total: "$1,170", fee: "TODO", note: "" },
-      { tier: "Standard", tenure: "3 months",  classes: 26,  perClass: "$25.00", total: "$650",   fee: "$45?",  note: "Quoted as $650 and $489 on different calls. TODO confirm." },
-      { tier: "Standard", tenure: "1 month",   classes: 8,   perClass: "TODO",   total: "$166?",  fee: "TODO", note: "Rarely offered; confirm if it exists." },
-      { tier: "Basic",    tenure: "12 months", classes: 104, perClass: "$15.00", total: "$1,560", fee: "TODO", note: "" },
-      { tier: "Basic",    tenure: "6 months",  classes: 52,  perClass: "TODO",   total: "$884?",  fee: "TODO", note: "" },
-      { tier: "Basic",    tenure: "3 months",  classes: 26,  perClass: "TODO",   total: "$489?",  fee: "TODO", note: "" }
+    includes: [
+      "One-on-one coaching with the same coach every class",
+      "Parent app access to follow your child's progress",
+      "Access to the Cuemath Leap platform for practice sheets and more",
+      "The Cuemath app for math games, puzzles, and 10-15 minutes of daily practice"
+    ],
+    trust: [
+      { overline: "Coach match guarantee", title: "The right coach, guaranteed", text: "We match a coach to [child]'s needs and your goals. If the fit is not right in the first couple of classes, we reassign at no charge until it is." },
+      { overline: "Risk free", title: "Pro-rated refund, anytime*", text: "1-on-1. Pay for classes attended. Refund any time, no questions. No lock-in. *Terms and conditions apply." },
+      { overline: "Trustpilot", title: "Rated 4.9/5", text: "Cuemath rated 4.9/5 on Trustpilot, 11,000+ reviews." }
     ],
     rules: [
-      "Frequency: 2 classes a week is the plan the numbers are built on. Extra classes around exams or catch-up can be scheduled inside the plan.",
+      "Two plans only: 6 months and 12 months. There is no 3-month or monthly plan. If a parent was told otherwise by a specialist, correct it plainly.",
+      "The price is per class. Classes are billed as one coaching fee for the plan: 52 classes on 6 months, 104 on 12 months at two a week.",
+      "Platform fee: $90 on the 6-month plan, charged once. $120 on the 12-month plan, waived. Say it as a line item, the way the card shows it.",
+      "12 months is the recommended tenure for every band. Recommend it first; offer 6 months when the parent needs a smaller commitment.",
+      "Three classes a week is available and changes only the class count and the coaching fee, not the per-class price.",
       "Sibling benefit: TODO confirm. Recent policy: 16 extra classes for the second child and tenure extended by 2 months.",
       "Referral benefit: TODO confirm. Quoted on calls as 8 extra classes.",
-      "Platform fee: TODO one number and when it applies. On calls it was quoted as $90, $45, $19 and $15 a month. This inconsistency cost trust. Say one number.",
-      "Refund: pro-rated, no questions asked, for unused classes. TODO confirm exact wording and the two-class coach-switch window.",
-      "Pause: classes can be paused for travel or exams. TODO confirm maximum pause and how tenure is adjusted.",
-      "Payment: one upfront payment per plan. Splitting is not offered. TODO confirm whether any exception path exists, and if so who approves it.",
-      "Carry-forward on renewal: up to 25% of the renewed plan's classes can be carried forward. TODO confirm for US."
+      "Refund: pro-rated, no questions asked, for unused classes. Coach switch at no charge if the fit is wrong in the first couple of classes.",
+      "Payment: one upfront payment per plan. Splitting is not offered. TODO confirm whether any exception path exists and who approves it.",
+      "Pause: classes can be paused for travel or exams. TODO confirm the maximum pause and how tenure adjusts."
     ],
     sequence: [
-      "Anchor to the plan the specialist already showed: \"You would have seen the plan at the end of the evaluation and again in the email with the report.\"",
-      "Name the plan you recommend for this child and why, using the report: which tier, which tenure, tied to the 3-month and 12-month milestones.",
-      "Say the total once from the grid. Then the per-class figure. Then confirm: \"So that is [total] for [classes] classes over [tenure].\"",
-      "State what is included in one breath: coach, 1:1 classes, practice platform, progress reviews, refund and coach-switch guarantee.",
-      "Pause. Let the parent respond. Handle the objection from the library. Do not restate the price a second time unless asked.",
-      "Ask: \"Shall we lock [child]'s coach slot now? I can stay on the call while you complete it.\""
+      "Anchor to what the specialist already showed: \"You would have seen the plans at the end of the evaluation and again in the email with the report.\"",
+      "Pick the band by the grade [child] is moving into, then the tier the specialist recommended. Open that card.",
+      "Say the recommended plan first: \"For [child] I would recommend the 12-month [tier] plan. That is [per_class] a class, 104 classes, a coaching fee of [total], and the platform fee is waived.\"",
+      "Then the alternative, once: \"The 6-month plan is [per_class_6] a class, 52 classes, [total_6], plus the $90 platform fee.\"",
+      "State what is included in one breath: the same coach every class, the parent app, the Leap practice platform, the Cuemath app.",
+      "Pause. Handle the objection from the library. Do not restate prices unless asked.",
+      "Ask: \"Shall we lock [child]'s coach slot on the 12-month plan now? I can stay on the call while you complete it.\""
     ]
   },
 
@@ -151,15 +175,15 @@ window.CONTENT = {
           guardrails: ["spouse"],
           objections: ["need_to_consult_spouse.spouse", "time_frequency.slots", "comparing_alternatives.shopping", "trust_or_indian_company.india", "already_enrolled_elsewhere.enrolled"] },
         { id: "payment", title: "Present the payment plan", goal: "One recommended plan, one total, one confirmation.",
-          script: "You would have seen the plans at the end of the evaluation and in the email. For [child], based on the report, I would recommend the [plan]. That is [total] for [classes] classes over [tenure], which works out to [per_class] a class. It includes the coach, the one-on-one classes, the practice platform, the progress reviews, and our refund and coach-switch guarantee.",
+          script: "You would have seen the plans at the end of the evaluation and in the email. For [child], based on the report, I would recommend the [plan]. That is [per_class] a class, [classes] classes, a coaching fee of [total], and on the 12-month plan the platform fee is waived. It includes the same coach every class, the parent app, the Leap practice platform and the Cuemath app, with our refund and coach-switch guarantee.",
           say: ["Open the Pricing drawer and read from the grid.", "Say the total once, then confirm it back.", "Then stop talking."],
           avoid: ["Do not quote two tenures in one breath.", "Do not mention the platform fee as an afterthought. It is part of the total you state."],
           guardrails: ["grid"],
           objections: ["price.discount", "price.platform_fee", "price.stacking", "payment_flexibility.monthly", "payment_flexibility.lump", "tenure_commitment.long"] },
         { id: "payment_obj", title: "Handle payment objections", goal: "Answer decisively so the parent has no open question on money.",
           script: "",
-          say: ["Price: recommend the tenure that fits, do not discount.", "Monthly: explain why plans are upfront, then offer the shorter tenure with the refund guarantee.", "Spouse: joint call, fixed time.", "Comparing: name the difference, offer the 3-month plan as the way to compare for real."],
-          avoid: ["Do not concede and close the profile within two minutes of a price objection. Offer the shorter tenure first.", "Do not improvise exceptions. If an exception is needed, say you will check and give a time you will call back."],
+          say: ["Price: recommend 12 months first, then 6 months. Do not discount.", "Monthly: explain why plans are upfront, then offer the 6-month plan with the refund guarantee.", "Spouse: joint call, fixed time.", "Comparing: name the difference, offer the 6-month plan as the way to compare for real."],
+          avoid: ["Do not concede and close the profile within two minutes of a price objection. Offer the 6-month plan first.", "Do not improvise exceptions. If an exception is needed, say you will check and give a time you will call back."],
           guardrails: ["grid", "ask"],
           objections: ["price.discount", "price.anchor", "payment_flexibility.monthly", "payment_flexibility.card", "tenure_commitment.short", "comparing_alternatives.group_center", "comparing_alternatives.edtech"] },
         { id: "next", title: "Agree the next step", goal: "Every open item gets a date. Every date gets a time.",
@@ -213,7 +237,7 @@ window.CONTENT = {
           guardrails: ["one_ac"] },
         { id: "open_item", title: "Address the open item", goal: "One item, resolved, then move to the ask.",
           script: "",
-          say: ["Spouse: \"Were you able to discuss it? What did [spouse] think?\" Then handle the concern they raise.", "Need time: \"What would help you decide?\" Offer the 3-month plan as a lower-commitment start.", "Pricing: re-present one plan from the grid. Do not re-open the tenure discussion.", "School restart or vacation: agree a start date and enrol now to hold the coach, or fix the next call date.", "Comparing: ask what they saw, name the difference, offer the 3-month plan as the way to compare for real."],
+          say: ["Spouse: \"Were you able to discuss it? What did [spouse] think?\" Then handle the concern they raise.", "Need time: \"What would help you decide?\" Offer the 6-month plan as the smaller commitment.", "Pricing: re-present one plan from the grid. Do not re-open the tenure discussion.", "School restart or vacation: agree a start date and enrol now to hold the coach, or fix the next call date.", "Comparing: ask what they saw, name the difference, offer the 6-month plan as the way to compare for real."],
           avoid: ["Do not offer something new that was not discussed unless it is the shorter tenure."],
           objections: ["need_to_consult_spouse.spouse", "timing_vacation.later", "price.discount", "comparing_alternatives.shopping", "payment_flexibility.monthly"] },
         { id: "payment2", title: "Re-present the plan", goal: "Same plan, same total, one confirmation.",
@@ -249,9 +273,9 @@ window.CONTENT = {
           avoid: ["Do not suggest splitting the payment as a workaround unless policy allows it."],
           objections: ["payment_flexibility.card"] },
         { id: "fee", title: "Platform fee question", goal: "One number, said once, with what it covers.",
-          script: "The platform fee is [fee] for the [tenure] plan. It covers the practice platform, progress reports and the parent app. It is included in the [total] I gave you, there is nothing added on top.",
-          say: ["Read the fee from the grid. If the grid says TODO, do not guess. Say you will confirm in writing within the hour."],
-          avoid: ["Do not describe it as 'small' or 'nominal'."],
+          script: "The platform fee is $90 on the 6-month plan, charged once, and it is waived on the 12-month plan. It covers the practice platform, progress reports and the parent app. It is shown as its own line on the payment page, exactly as I am describing it.",
+          say: ["Read the fee from the grid: $90 on 6 months, waived on 12 months. If the parent is on 6 months and the fee is the blocker, the 12-month plan removes it."],
+          avoid: ["Do not describe it as 'small' or 'nominal'. Do not quote any other fee figure."],
           guardrails: ["grid"],
           objections: ["price.platform_fee"] },
         { id: "confirm_pay", title: "Confirm and close", goal: "Confirm the charge and what happens next.",
@@ -322,7 +346,7 @@ window.CONTENT.objections = {
      "I think when the price is a little too high for me... I'm still not comfortable with 165 if you can bring it down",
      "anything like construction[reduction] and discount everything?"
     ],
-    "draft": "I understand, and I want to be straight with you: our pricing is the same for every family, so there is no discount I can add. What I can do is make sure you are on the right plan. If the yearly amount is the concern, the 3-month plan gives [child] the same coach and the same programme for [total_3m], and you can renew after you have seen the progress. Would that work better?",
+    "draft": "I understand, and I want to be straight with you: our pricing is the same for every family, so there is no discount I can add. What I can do is make sure you are on the right plan. If the yearly amount is the concern, the 6-month plan gives [child] the same coach and the same programme for [total_6], and you can extend after you have seen the progress. Would that work better?",
     "dont": "Never say 'let me check what I can do' on price. Never move to closing the profile within two minutes of a price objection.",
     "best": [
      {
@@ -390,8 +414,8 @@ window.CONTENT.objections = {
      "Can I mean, can you take off the technology free or that one?",
      "I told them what I'm looking is $11 per hour if you can make those changes and adjustments, then we can go ahead, otherwise it's too costly."
     ],
-    "draft": "The platform fee is [fee] for the [tenure] plan and it is already inside the [total] I gave you. It covers the practice platform, the progress reports and the parent app. There is nothing added on top of that number.",
-    "dont": "Do not describe the fee as small or nominal. Do not quote a different fee on a later call.",
+    "draft": "The platform fee is $90 on the 6-month plan, charged once, and it is waived on the 12-month plan. It covers the practice platform, the progress reports and the parent app, and it appears as its own line on the payment page. If the fee is the concern, the 12-month plan removes it entirely.",
+    "dont": "Do not describe the fee as small or nominal. Never quote any figure other than $90 on 6 months and waived on 12.",
     "best": [
      {
       "score": 4,
@@ -424,7 +448,7 @@ window.CONTENT.objections = {
      "my only concern was that fee, so is it possible for you to make it for $15 per month?",
      "I have seen it when the class ended. I have seen it on the website. It says $20 but when I saw first on your website, it said $15 per class."
     ],
-    "draft": "A private tutor at the same hourly rate gives you the hour. Here the hour comes with a coach matched to [child]'s report, a plan with milestones, the practice platform between classes, progress reviews, and a refund if it is not working. That is what the per-class figure buys. If you want to compare properly, the 3-month plan is the fair way to do it.",
+    "draft": "A private tutor at the same hourly rate gives you the hour. Here the hour comes with a coach matched to [child]'s report, a plan with milestones, the Leap practice platform between classes, progress reviews, and a refund if it is not working. That is what the per-class figure buys. If you want to compare properly, the 6-month plan is the fair way to do it.",
     "dont": "Do not argue that the other option is bad. Do not match a competitor's number.",
     "best": [
      {
@@ -497,7 +521,7 @@ window.CONTENT.objections = {
      "It's just an overseas thing. I'm paying you guys, I don't know who to call for that. You know what I'm saying? It's just a very long hassle.",
      "the way you guys do the payments, that's what I don't like. I don't have money for that... I don't have money to pay up front"
     ],
-    "draft": "Plans are paid once because the coach is reserved for [child] for the whole tenure and the plan is built around the 3 and 12-month milestones. There is no monthly option. If a single payment is the difficulty, the 3-month plan brings the amount down to [total_3m], and if it does not work out you get a pro-rated refund on unused classes.",
+    "draft": "Plans are paid once because the coach is reserved for [child] for the whole tenure and the plan is built around the 3 and 12-month milestones. There is no monthly option. If a single payment is the difficulty, the 6-month plan brings the amount to [total_6], and if it does not work out you get a pro-rated refund on unused classes.",
     "dont": "Do not say 'I will get an exception' unless you have one. Do not offer unrelated consolations like free workbooks.",
     "best": [
      {
@@ -560,8 +584,8 @@ window.CONTENT.objections = {
      "Can you take the amount from my side for one or two classes and give me the demo classes?",
      "can they be like a two or three payment for that?"
     ],
-    "draft": "I understand a single amount feels large. Two things help: the 3-month plan at [total_3m], and the refund guarantee, which means the money is only committed for classes [child] actually takes.",
-    "dont": "Do not repeat the refund policy as the only answer. Offer the shorter tenure first.",
+    "draft": "I understand a single amount feels large. Two things help: the 6-month plan at [total_6], and the refund guarantee, which means the money is only committed for classes [child] actually takes.",
+    "dont": "Do not repeat the refund policy as the only answer. Offer the 6-month plan first.",
     "best": [],
     "avoid": [
      {
@@ -578,7 +602,7 @@ window.CONTENT.objections = {
     "verbatims": [
      "the payment option is can we have a break payment?"
     ],
-    "draft": "We do not split a plan into instalments. The nearest option is the shorter tenure: [total_3m] for three months now, and renewal after that. Would that help?",
+    "draft": "We do not split a plan into instalments. The nearest option is the 6-month plan: [total_6] now, and you extend after that. Would that help?",
     "dont": "Do not improvise a split. If a policy exception exists, say you will confirm in writing by a set time.",
     "best": [],
     "avoid": [
@@ -635,8 +659,8 @@ window.CONTENT.objections = {
      "Can I pause? ... I don't want to have the classes also that time.",
      "do you guys have anything where we can like you know do like a like a one month trial and see how it goes?"
     ],
-    "draft": "A 3-month plan is available: [total_3m] for 26 classes. It gets [child] through the first milestone and the start of the second, and you decide about continuing with the progress in front of you.",
-    "dont": "Do not deny the 3-month plan exists. It has been quoted on many calls; check the grid.",
+    "draft": "The two plans we offer are 6 months and 12 months; there is no 3-month or monthly plan any more. The 6-month plan is [total_6] for 52 classes. It gets [child] through the first two milestones, and you decide about continuing with the progress in front of you.",
+    "dont": "Do not offer a 3-month plan. It was retired on 5 August 2026. If a specialist mentioned it, correct it plainly.",
     "best": [
      {
       "score": 5,
@@ -919,7 +943,7 @@ window.CONTENT.objections = {
      "My preference is offline. We have Kuman, we have Gideon and we have Best Friends.",
      "I do not know, compared with other classes, how would be the two mathists behind us."
     ],
-    "draft": "Centres like Kumon or Mathnasium work in groups on a fixed sequence of worksheets. Here [child] has one coach, and the plan starts from [child]'s report, so the time goes to [gaps] rather than to a queue. If you want to see the difference for real, the 3-month plan is the honest comparison.",
+    "draft": "Centres like Kumon or Mathnasium work in groups on a fixed sequence of worksheets. Here [child] has one coach, and the plan starts from [child]'s report, so the time goes to [gaps] rather than to a queue. If you want to see the difference for real, the 6-month plan is the honest comparison.",
     "dont": "Do not criticise the other provider. Name the structural difference and stop.",
     "best": [
      {
@@ -983,7 +1007,7 @@ window.CONTENT.objections = {
      "We found someone... an independent tutor... following the same common core curriculum... the pricing was very good. It was like $12 per hour.",
      "We are also considering [a competitor] and they are giving classes for $415... they have come down to that rate."
     ],
-    "draft": "A good private tutor and a Cuemath coach do similar things in the hour. What you add here is the report-driven plan, the practice platform between classes, progress reviews at 30 days and quarterly, and the coach-switch and refund guarantees. If you have a tutor you trust, the 3-month plan is a fair way to compare.",
+    "draft": "A good private tutor and a Cuemath coach do similar things in the hour. What you add here is the report-driven plan, the practice platform between classes, progress reviews at 30 days and quarterly, and the coach-switch and refund guarantees. If you have a tutor you trust, the 6-month plan is a fair way to compare.",
     "dont": "Do not dismiss the tutor.",
     "best": [],
     "avoid": [
@@ -1214,7 +1238,7 @@ window.CONTENT.objections = {
      "We spoke with a local teacher who is also teaching math tutoring in person; we would like to send her to their home.",
      "actually I have taken from coding that 6 months subscription I have taken from them...I have paid that six months."
     ],
-    "draft": "That is good, [child] is getting help. May I ask what you are hoping to add? [Listen.] Most families who come to us from a centre are looking for one-on-one attention on specific gaps, which is what the report showed for [child]. If it is worth testing, the 3-month plan runs alongside without a long commitment.",
+    "draft": "That is good, [child] is getting help. May I ask what you are hoping to add? [Listen.] Most families who come to us from a centre are looking for one-on-one attention on specific gaps, which is what the report showed for [child]. If it is worth testing, the 6-month plan runs alongside without a long commitment.",
     "dont": "Do not ask them to drop the other provider. Do not close the profile without asking what they are missing.",
     "best": [
      {
@@ -1245,7 +1269,7 @@ window.CONTENT.objections = {
      "he is not ready for that yet... he felt the pressure... he was saying that I'm not interested in this type of thing. But I am interested in that.",
      "My son was not interested in that. He was looking for something else. So he said no. Even though I was interested because I liked the pattern... since I cannot force him to do that so as of now I am saying no."
     ],
-    "draft": "That is worth taking seriously. The evaluation can feel like a test, and it is not how classes feel. Can I ask what [child] said about it? [Listen.] The first month with the coach is deliberately about getting comfortable. If you would like, we can start with the 1-month or 3-month plan and let [child] decide with you after that.",
+    "draft": "That is worth taking seriously. The evaluation can feel like a test, and it is not how classes feel. Can I ask what [child] said about it? [Listen.] The first month with the coach is deliberately about getting comfortable. If you would like, we can start with the 6-month plan and let [child] decide with you after that.",
     "dont": "Do not accept the child's no without asking why. Do not push a 12-month plan here.",
     "best": [
      {
