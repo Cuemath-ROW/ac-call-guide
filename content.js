@@ -99,18 +99,6 @@ window.CONTENT = {
       { overline: "Risk free", title: "Pro-rated refund, anytime*", text: "1-on-1. Pay for classes attended. Refund any time, no questions. No lock-in. *Terms and conditions apply." },
       { overline: "Trustpilot", title: "Rated 4.9/5", text: "Cuemath rated 4.9/5 on Trustpilot, 11,000+ reviews." }
     ],
-    rules: [
-      "Two plans only: 6 months and 12 months. There is no 3-month or monthly plan. If a parent was told otherwise by a specialist, correct it plainly.",
-      "The price is per class. Classes are billed as one coaching fee for the plan: 52 classes on 6 months, 104 on 12 months at two a week.",
-      "Platform fee: $90 on the 6-month plan, charged once. $120 on the 12-month plan, waived. Say it as a line item, the way the card shows it.",
-      "12 months is the recommended tenure for every band. Recommend it first; offer 6 months when the parent needs a smaller commitment.",
-      "Three classes a week is available and changes only the class count and the coaching fee, not the per-class price.",
-      "Sibling benefit: TODO confirm. Recent policy: 16 extra classes for the second child and tenure extended by 2 months.",
-      "Referral benefit: TODO confirm. Quoted on calls as 8 extra classes.",
-      "Refund: pro-rated, no questions asked, for unused classes. Coach switch at no charge if the fit is wrong in the first couple of classes.",
-      "Payment: one upfront payment per plan. Splitting is not offered. TODO confirm whether any exception path exists and who approves it.",
-      "Pause: classes can be paused for travel or exams. TODO confirm the maximum pause and how tenure adjusts."
-    ],
     sequence: [
       "Anchor to what the specialist already showed: \"You would have seen the plans at the end of the evaluation and again in the email with the report.\"",
       "Pick the band by the grade [child] is moving into, then the tier the specialist recommended. Open that card.",
@@ -311,7 +299,7 @@ window.CONTENT = {
           objections: ["other.tech"] },
         { id: "sibling", title: "Sibling or referral", goal: "Ask once, clearly.",
           script: "Does [child] have a sibling who might also benefit? The sibling benefit is [sibling_benefit]. And if you know a family who would value this, the referral benefit is [referral_benefit].",
-          say: ["Read both benefits from the grid rules. Do not improvise numbers."],
+          say: ["Quote the sibling and referral benefits only from the current policy. Do not improvise numbers."],
           avoid: ["Do not stack benefits in a way the grid does not allow."],
           guardrails: ["grid"],
           objections: ["price.stacking"] },

@@ -359,8 +359,7 @@ function renderPricing() {
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-12);margin-top:var(--space-16)">${trust}</div>
     <div class="type-heading-sm" style="margin-top:var(--space-24)">How to present the plan</div>
     <ol class="type-body-md">${p.sequence.map(r => `<li style="margin-bottom:var(--space-8)">${fill(r)}</li>`).join("")}</ol>
-    <div class="type-heading-sm" style="margin-top:var(--space-24)">Rules to state</div>
-    <ul class="type-body-md">${p.rules.map(r => `<li style="margin-bottom:var(--space-8)">${todo(r)}</li>`).join("")}</ul>`;
+`;
 }
 function redrawPricing() { document.getElementById("drawer-body").innerHTML = renderPricing(); }
 function todo(s) { s = esc(s); return s.replace(/TODO[^.]*\.?|\?/g, m => `<span class="todo">${m}</span>`); }
