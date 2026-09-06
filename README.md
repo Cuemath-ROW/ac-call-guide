@@ -26,7 +26,7 @@ open http://localhost:8765
 
 ## Deploy
 ```
-git add -A && git commit -m "content update" && git push origin main
+./deploy.sh "content update"
 ```
 Never edit on GitHub directly. This clone is the source of truth (JAI local-first rule).
 
