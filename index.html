@@ -112,7 +112,7 @@
   <div class="body" id="drawer-body"></div>
 </aside>
 
-<script src="content.js?v=202609061929"></script>
+<script src="content.js?v=202609061931"></script>
 <script>
 /* ============================== state ============================== */
 const C = window.CONTENT;
@@ -134,9 +134,10 @@ function greetFor(tzId) {
   const h = parseInt(new Intl.DateTimeFormat("en-US", { hour: "numeric", hour12: false, timeZone: tz.iana }).format(new Date()), 10);
   return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
 }
+function tokenMap() { return { AC: acName || "[AC]", child: ctx.child || "[child]", date: ctx.date || "[date]", parent: ctx.parent || "[parent]", greet: greetFor(parentTz) }; }
 function fill(text) {
-  const map = { AC: acName || "[AC]", child: ctx.child || "[child]", date: ctx.date || "[date]", parent: ctx.parent || "[parent]", greet: greetFor(parentTz) };
-  return esc(text).replace(/\[(AC|child|date|parent|greet)\]/g, (m, k) => `<span class="tok">${esc(map[k])}</span>`)
+  const map = tokenMap();
+  return esc(text).replace(/\[(AC|child|date|parent|greet)\]/g, (m, k) => `<span class="tok" data-k="${k}">${esc(map[k])}</span>`)
                   .replace(/\[([a-z_0-9]+)\]/g, (m, k) => `<span class="tok">[${esc(k)}]</span>`);
 }
 function fillPlain(text) {
@@ -261,9 +262,9 @@ function renderFlow(flow, step) {
       </section>
     </div>`;
 }
-function setCtx(k, v) { ctx[k] = v; store.set(LS.ctx, ctx); refreshTokens(); }
+function setCtx(k, v) { ctx[k] = v; store.set(LS.ctx, ctx); updateTokens(); }
+function updateTokens() { const map = tokenMap(); document.querySelectorAll(".tok[data-k]").forEach(el => { el.textContent = map[el.dataset.k]; }); }
 function setTz(v) { parentTz = v; store.set(LS.tz, v); route(); }
-function refreshTokens() { document.querySelectorAll(".script, .gen").forEach(el => { if (el.dataset.raw) el.innerHTML = fill(el.dataset.raw); }); route(); }
 function toggleDone(f, s) { done[f] = done[f] || {}; done[f][s] = !done[f][s]; store.set(LS.done, done); route(); }
 function markAndNext(f, s, n) { done[f] = done[f] || {}; done[f][s] = true; store.set(LS.done, done); location.hash = `#/${f}/${n}`; }
 function newCall(f) { if (!confirm("Start a new call? This clears the ticks and the child/parent fields.")) return; done[f] = {}; ctx = { child: "", date: "", parent: "" }; store.set(LS.done, done); store.set(LS.ctx, ctx); location.hash = `#/${f}`; route(); }
